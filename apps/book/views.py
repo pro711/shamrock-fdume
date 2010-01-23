@@ -1,19 +1,57 @@
 # -*- coding: utf-8 -*-
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from django.http import HttpResponse, Http404
+from django.http import HttpResponseRedirect,Http404, HttpResponseForbidden,HttpResponse,HttpResponseNotFound
+from django.core.paginator import Paginator, InvalidPage
 from django.views.generic.list_detail import object_list, object_detail
 from django.views.generic.create_update import create_object, delete_object, \
     update_object
 from google.appengine.ext import db
+from google.appengine.ext.db import djangoforms as forms
 from mimetypes import guess_type
 from myapp.forms import PersonForm
 from myapp.models import Contract, File, Person
+
+from apps.book.models import User,Course,BookItem
+
 from ragendja.dbutils import get_object_or_404
 from ragendja.template import render_to_response
 
+class BookAddForm(forms.ModelForm):
+    class Meta:
+        model = BookItem          
+        #exclude = ['post_date', ]
+
+
+
+
 def book_index(request):
-    return render_to_response(request, "book/book_index.html")
+    q = BookItem.all()
+    q.order("-post_date")
+    results = q.fetch(8)
+    #FIXME: odd numbers fetched
+    items = [results[2*n:2*n+2] for n in range(len(results)/2)]
+    
+    template_values = {
+            'books' : items,
+            }
+    
+    return render_to_response(request, "book/book_index.html", template_values)
+
+def book_add(request):
+    if request.method == 'GET':
+        form = BookAddForm()
+        template_values = {
+                'form' : form,
+                }
+        return render_to_response(request, "book/book_add.html", template_values)
+    else:
+        form = BookAddForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.put()
+            return HttpResponseRedirect("/book/")
+
 
 
 def list_people(request):
