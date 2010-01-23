@@ -18,7 +18,7 @@
 
 <div id="content">
     
-    <h1>{% trans "Books" %}</h1>
+    <h1>{% trans "Add a book" %}</h1>
 
     <div class="grid-16-8 clearfix">
         <div class="article">
@@ -31,45 +31,13 @@
 
     <div class="book_pop">
     <h2>
-        {% trans "Newly Added" %} &nbsp; · · · · · · &nbsp;
-        <span class="pl">
-            (&nbsp;<a href="add/">{% trans "Add a new one" %}</a>&nbsp;)
-        </span>
+        {% trans "Book details" %} &nbsp; · · · · · · &nbsp;
     </h2>
-    <ul class="entry-list-col2">
+    <form name="addBook" method="post" action="">
+        {{ form.as_p }}
+        <input type="submit" value={% trans "Save" %} />
+    </form>
 
-{% for pair in books%}
-
-        <li>
-            <ul class="clearfix">
-    {% for e in pair %}
-     <li class="clearfix">
-        <a href="{{e.get_absolute_url}}">
-        <img class="cover" alt="{{e.title}}" src="/static/images/book-default-medium.gif">
-        </a>
-        <h2>
-            <a href="{{e.get_absolute_url}}">{{e.title}}</a>
-        </h2>
-        <p class="entry-star-small clearfix">
-            <br>
-            {% trans "Author" %}:&nbsp;
-            {{e.author}}
-            <br>
-        </p>
-        <div class="entry-list-col2-review color-gray">
-            
-            <p class="pt6">
-                {{e.description}}
-            </p>
-        </div>
-    </li>
-    {% endfor %}
-
-            </ul>
-        </li>
-
-{% endfor %}
-    </ul>
     </div>
 </div>
 

@@ -10,6 +10,9 @@ class User(db.Model):
     password = db.StringProperty(required=True)
     email = db.StringProperty(required=True)
     
+    def __unicode__(self):
+        return '%d %s' % (self.uid, self.username)
+    
 class Course(db.Model):
     """Course infomation."""
     course_id = db.IntegerProperty(required=True)
