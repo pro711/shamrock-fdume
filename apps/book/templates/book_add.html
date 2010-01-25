@@ -33,9 +33,38 @@
     <h2>
         {% trans "Book details" %} &nbsp; · · · · · · &nbsp;
     </h2>
-    <form name="addBook" method="post" action="">
-        {{ form.as_p }}
-        <input type="submit" value={% trans "Save" %} />
+    <form id="addbookform" name="addBook" method="post" action="">
+        <table align="center">
+        {{ form.as_table }}
+        <tr><td></td><td align="center"><input id="submit" type="submit" value={% trans "Save" %} /></td></tr>
+        </table>
+        
+<!--
+        <table align="center">
+        <tbody>
+        
+        <tr>
+        <td>{% trans "Title" %}:</td>
+        <td align="center" width="75" class="pl2">{{ form.title }}</td>
+        </tr>
+
+        <tr><td></td><td><input type="checkbox" name="rev_spoiler"></td></tr>
+        <tr><td></td><td><input id="submit" type="submit" value={% trans "Save" %} /></td></tr>
+                
+        </tbody></table>
+-->
+
+
+<!--
+    {% for field in form %}
+        <div class="addbookform">
+            {{ field.errors }}
+            {{ field.label_tag }}: {{ field }}
+        </div>
+    {% endfor %}
+-->
+
+
     </form>
 
     </div>
