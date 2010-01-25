@@ -51,13 +51,15 @@
             <a href="{{e.get_absolute_url}}">{{e.title}}</a>
         </h2>
         <p class="entry-star-small clearfix">
+            <span class="font-small color-red fleft">
+            {% trans "Offer Price" %}:&nbsp; {{ e.offer_price }}
+            </span>
             <br>
             {% trans "Author" %}:&nbsp;
             {{e.author}}
             <br>
         </p>
         <div class="entry-list-col2-review color-gray">
-            
             <p class="pt6">
                 {{e.description}}
             </p>

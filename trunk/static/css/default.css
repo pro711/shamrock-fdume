@@ -5742,3 +5742,22 @@ left:212px;
 position:absolute;
 top:-3px;
 }
+
+
+#addbookform input[type="text"] {
+border:1px solid #CCCCCC;
+font-size:12px;
+padding:2px;
+width: 450px;
+}
+
+#addbookform label {
+padding:2px;
+width: 150px;
+}
+
+/*
+#addbookform #submit {
+width: 100px;
+}
+*/
