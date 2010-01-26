@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %} {% trans "Lessons" %} {% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/css/default.css" />
+{% endblock %}
+
+
+{% block header %}
+<div id="wrapper">
+
+{% include "lesson_header.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+<div id="content">
+    
+    <h1>{{ e.name }}</h1>
+
+<div class="grid-16-8 clearfix">
+    <div class="article">
+        <div class="indent">
+            <div class="subjectwrap clearfix">
+                <div class="subject clearfix">
+                    <div id="mainpic">
+                        <a title="{{ e.name }}" href="{{ e.get_absolute_url }}">
+                            <img alt="{{ e.name }}" src="/static/images/book-default-medium.gif">
+                        </a>
+                        <br>
+                    </div>
+                    <div id="info">
+                        <span>
+                            <span class="pl">
+                                {% trans "Instructor" %}
+                            </span>
+                            :
+                            {{e.instructor}}
+                        </span>
+                        <br>
+                        <div class="obmo">
+                            <span class="pl">
+                                {{ e.view_num }} &nbsp; {% trans "Views" %}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div id="interest_sectl">
+                    <div class="rating_wrap clearbox">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br clear="all">
+        <div class="related_info">
+            <h2>
+                {% trans "Decsription" %} &nbsp; ·&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;
+            </h2>
+            <div class="indent">
+                {{ e.description }}
+                <br>
+            </div>
+            <h2 class="green_tab clearfix" id="comment_tab">
+                <div class="ll">
+                    {% trans "Comments" %}&nbsp;&nbsp;· · · · · ·&nbsp;
+                </div>
+            </h2>
+            <div class="clearfix" id="interest_sect_level">
+                <ul class="fright ul_subject_menu bicelink color_gray pt6 clearfix">
+                    <li>
+                        <a rel="nofollow" href="{{ e.get_absolute_url }}add_comment">
+                            {% trans "Add a comment" %}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        <br clear="all">
+            <div id="wt_0">
+            {% for comment in comments %}
+                <div class="ctsh">
+                    <ul style="clear: both;" class="tlst clearfix">
+                        <li class="nlst">
+                            <h3>
+                                    comment.title
+                            </h3>
+                        </li>
+                        <li class="clst">
+                            <span class="pl ll obss">
+                                <span class="starb">
+                                        {{ comment.commenter }}
+                                </span>
+                            </span>
+                            <br>
+                            <br>
+                            <div id="comment_{{ comment.comment_id }}">
+                                {{ comment.content }}
+                                <br>
+                                <br>
+                            </div>
+<!--
+                            <div style="display: none;" id="review_2926167_full">
+                            </div>
+-->
+                        </li>
+                    </ul>
+                </div>
+                <div class="clear">
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+
+   
+    <div class="aside">
+        <h2>
+            热门标签 &nbsp; ·&nbsp; ·&nbsp; ·&nbsp; ·&nbsp; ·&nbsp; ·
+            <span class="pl">
+                (
+                <a href="/lesson/tag/?view=type">
+                    所有热门标签
+                </a>
+                )
+            </span>
+        </h2>
+        <ul class="hot-tags-col5">
+            <li>
+                <ul class="clearfix">
+                    <li>
+                        [文学]
+                    </li>
+                    <li>
+                        <a href="/lesson/tag/小说">
+                            小说
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/lesson/tag/散文">
+                            散文
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/lesson/tag/随笔">
+                            随笔
+                        </a>
+                    </li>
+                    <li class="last">
+                        <a href="/lesson/tag/童话">
+                            童话
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/lesson/tag/日本文学">
+                            日本文学
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/lesson/tag/诗歌">
+                            诗歌
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/lesson/tag/名著">
+                            名著
+                        </a>
+                    </li>
+                    <li class="last">
+                        <a href="/lesson/tag/港台">
+                            港台
+                        </a>
+                    </li>
+                    <li class="last">
+                        <a href="/lesson/tag/?view=type#文学">
+                            (更多)
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="extra">
+    </div>
+</div>
+</div>
+
+
+
+{% endblock %}
+
+{% block footer %}
+{% include "lesson_footer.html" %}
+
+</div>
+
+{% endblock %}

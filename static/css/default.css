@@ -5751,6 +5751,11 @@ padding:2px;
 width: 450px;
 }
 
+#addbookform textarea {
+padding:2px;
+width: 450px;
+}
+
 #addbookform label {
 padding:2px;
 width: 150px;
