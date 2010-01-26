@@ -3,18 +3,11 @@ from django.db.models import permalink, signals
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import force_unicode,smart_str
 from google.appengine.ext import db
+from django.contrib.auth.models import User
+
 from ragendja.dbutils import cleanup_relations
 
-class User(db.Model):
-    """User infomation."""
-    uid = db.IntegerProperty(required=True)
-    username = db.StringProperty(required=True)
-    password = db.StringProperty(required=True)
-    email = db.StringProperty(required=True)
-    
-    def __unicode__(self):
-        return '%d %s' % (self.uid, self.username)
-    
+   
 class Course(db.Model):
     """Course infomation."""
     course_id = db.IntegerProperty(required=True)
@@ -25,8 +18,8 @@ class BookItem(db.Model):
     title = db.StringProperty(required=True)
     author = db.StringProperty(required=True)
     publisher = db.StringProperty(required=True)
-    description = db.StringProperty()
-    owner = db.ReferenceProperty(User,required=True)
+    description = db.StringProperty(multiline=True)
+    owner = db.ReferenceProperty(User)
     orig_price = db.FloatProperty()
     offer_price = db.FloatProperty(required=True)
     location = db.StringProperty()

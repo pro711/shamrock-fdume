@@ -1,5 +1,18 @@
 {% extends "base.html" %}
-{% block title %}Register{% endblock %}
+
+{% load i18n %}
+{% block title %} {% trans "Register" %} {% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/css/default.css" />
+{% endblock %}
+
+{% block header %}
+<div id="wrapper">
+
+{% include "header.html" %}
+
+{% endblock %}
 
 {% block content %}
 <h1>Register</h1>
@@ -8,3 +21,11 @@
   <input type="submit" value="Register" />
 </form>
 {% endblock content %}
+
+
+{% block footer %}
+{% include "footer.html" %}
+
+</div>
+
+{% endblock %}

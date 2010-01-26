@@ -51,19 +51,17 @@
                             </span>
                             {{ e.orig_price }} &nbsp;{% trans "Yuan" %}
                             <br>
-                        </div>
+                            <span class="pl">
+                                {% trans "Offer Price" %}:
+                            </span>
+                            <strong class="rating_num">
+                                {{ e.offer_price }} &nbsp;{% trans "Yuan" %}
+                            </strong>                        </div>
                     </div>
                 </div>
                 <div id="interest_sectl">
                     <div class="rating_wrap clearbox">
-                        <p class="rating_self clearfix">
-                            <span class="pl">
-                                {% trans "Offer Price" %}:
-                            </span>
-                            <strong class="ll rating_num">
-                                {{ e.offer_price }} &nbsp;{% trans "Yuan" %}
-                            </strong>
-                        </p>
+
                         <div class="obmo">
                             <span class="pl">
                                 {% trans "Owner" %}:

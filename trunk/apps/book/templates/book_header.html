@@ -3,7 +3,7 @@
 
 <form id="ssform" name="ssform" method="get" action="/subject_search">
 
-    <a href="http://www.douban.com" title={% trans "Books" %}><img src="http://t.douban.com/pics/logosmall.gif" alt="douban" class="logo"/></a>
+    <a href="http://www.douban.com" title={% trans "Books" %}><img src="/static/images/logosmall.gif" alt="douban" class="logo"/></a>
     <div id="nav">
             <a  href="/"><span>{% trans "Main Page" %}</span></a>
             <a  href="/course/"><span>{% trans "Courses" %}</span></a>
@@ -27,9 +27,25 @@
     <a href="/book/chart">排行榜</a>
     <a href="/book/tag/">分类浏览</a> 
     </div>
-
-    <a href="/settings/">{% trans "Settings" %}</a>
-    <a href="/logout/">{% trans "Logout" %}</a>
+    
+    <span class="pl">
+    {% if user.is_authenticated %}
+        {% trans "Welcome, " %} {{ user.username }}!
+        <a href="/settings/">{% trans "Settings" %}</a>
+        <a href="{% url django.contrib.auth.views.logout %}">
+            {% trans "Logout" %}
+        </a>
+    {% else %}
+        {% trans "Welcome, please" %}
+        <a rel="nofollow" href="{% url django.contrib.auth.views.login %}">
+            {% trans "Login" %}
+        </a>
+        {% trans "or" %}
+        <a href="{% url registration.views.register %}">
+            {% trans "Register" %}
+        </a>
+    {% endif %}
+    </span>
     <div class="clear"></div>
 </div>
 
