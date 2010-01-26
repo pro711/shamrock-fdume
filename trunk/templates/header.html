@@ -1,0 +1,44 @@
+{% load i18n %}
+<div id="header">
+
+<form id="ssform" name="ssform" method="get" action="/subject_search">
+
+    <a href="http://www.douban.com" title={% trans "Books" %}><img src="/static/images/logosmall.gif" alt="douban" class="logo"/></a>
+    <div id="nav">
+            <a  href="/"><span>{% trans "Main Page" %}</span></a>
+    </div>
+    
+<!--
+<div id="searbar">
+    <span class="submit"><input class="butt" type="submit" value="搜索"/></span>
+    <span><input class="j a_search_text" name="search_text" title="书籍、电影、音乐" type="text" size="22" maxlength="60" value="" id="page_focus"/></span>
+</div>
+
+-->
+<div class="clear"></div>
+
+<div id="status">
+    <div id="subnav">
+    </div>
+    <span class="pl">
+    {% if user.is_authenticated %}
+        {% trans "Welcome, " %} {{ user.username }}!
+        <a href="{% url django.contrib.auth.views.logout %}">
+            {% trans "Logout" %}
+        </a>
+    {% else %}
+        {% trans "Welcome, please" %}
+        <a rel="nofollow" href="{% url django.contrib.auth.views.login %}">
+            {% trans "Login" %}
+        </a>
+        {% trans "or" %}
+        <a href="{% url registration.views.register %}">
+            {% trans "Register" %}
+        </a>
+    {% endif %}
+    </span>
+    <div class="clear"></div>
+</div>
+
+</form>
+</div>
