@@ -6,11 +6,10 @@ from google.appengine.ext import db
 from django.contrib.auth.models import User
 
 from ragendja.dbutils import cleanup_relations
+from apps.lesson.models import Lesson
 
-   
-class Course(db.Model):
-    """Course infomation."""
-    course_id = db.IntegerProperty(required=True)
+
+
 
 class BookItem(db.Model):
     """Book item to be transferred."""
@@ -27,7 +26,7 @@ class BookItem(db.Model):
     post_date = db.DateTimeProperty(auto_now=True)
     valid_date = db.DateTimeProperty()
     tag = db.StringProperty()
-    course = db.ReferenceProperty(Course)
+    course = db.ReferenceProperty(Lesson)
 
 
     def __unicode__(self):

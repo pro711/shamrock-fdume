@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %} {% trans "Books" %} {% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/css/default.css" />
+{% endblock %}
+
+
+{% block header %}
+<div id="wrapper">
+
+{% include "lesson_header.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+<div id="content">
+    
+    <h1>{% trans "Add a comment" %}</h1>
+
+    <div class="grid-16-8 clearfix">
+        <div class="article">
+            <form action="/item_search" class="search-wrap">
+            <input type="text" name="search_text" title={% trans "Title, Author" %} class="book-search j a_search_result greyinput" id="sinput">
+            <input type="submit" value={% trans "Search" %} class="search-btn">
+
+            </form>
+
+
+    <div class="lesson_pop">
+    <h2>
+        {% trans "Add a comment" %} &nbsp; · · · · · · &nbsp;
+    </h2>
+    <form id="addbookform" name="addcomment" method="post" action="">
+        <table align="center">
+        {{ form.as_table }}
+        <tr><td></td><td align="center"><input id="submit" type="submit" value={% trans "Add comment" %} /></td></tr>
+        </table>
+        
+
+
+    </form>
+
+    </div>
+</div>
+
+        <div class="aside">
+            <h2>
+                热门标签&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·
+                <span class="pl">
+                    (
+                    <a href="/book/tag/?view=type">
+                        所有热门标签
+                    </a>
+                    )
+                </span>
+            </h2>
+            <ul class="hot-tags-col5">
+                <li>
+                    <ul class="clearfix">
+                        <li>
+                            [文学]
+                        </li>
+                        <li>
+                            <a href="/book/tag/小说">
+                                小说
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/book/tag/散文">
+                                散文
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/book/tag/随笔">
+                                随笔
+                            </a>
+                        </li>
+                        <li class="last">
+                            <a href="/book/tag/童话">
+                                童话
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/book/tag/日本文学">
+                                日本文学
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/book/tag/诗歌">
+                                诗歌
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/book/tag/名著">
+                                名著
+                            </a>
+                        </li>
+                        <li class="last">
+                            <a href="/book/tag/港台">
+                                港台
+                            </a>
+                        </li>
+                        <li class="last">
+                            <a href="/book/tag/?view=type#文学">
+                                (更多)
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <ul class="clearfix">
+                        <li>
+                            [流行]
+                        </li>
+                        <li>
+                            <a href="/book/tag/漫画">
+                                漫画
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/book/tag/绘本">
+                                绘本
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/book/tag/青春">
+                                青春
+                            </a>
+                        </li>
+                        <li class="last">
+                            <a href="/book/tag/推理">
+                                推理
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/book/tag/武侠">
+                                武侠
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/book/tag/科幻">
+                                科幻
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/book/tag/奇幻">
+                                奇幻
+                            </a>
+                        </li>
+                        <li class="last">
+                            <a href="/book/tag/言情">
+                                言情
+                            </a>
+                        </li>
+                        <li class="last">
+                            <a href="/book/tag/?view=type#流行">
+                                (更多)
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="extra">
+            
+        </div>
+    </div>
+    </div>
+
+
+
+{% endblock %}
+
+{% block footer %}
+{% include "book_footer.html" %}
+
+</div>
+
+{% endblock %}

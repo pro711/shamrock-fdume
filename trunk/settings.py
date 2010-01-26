@@ -103,6 +103,7 @@ INSTALLED_APPS = (
     'ragendja',
     'myapp',
     'apps.book',
+    'apps.lesson',
     'registration',
     'mediautils',
 )
