@@ -13,8 +13,7 @@ from google.appengine.ext.db import djangoforms as forms
 from mimetypes import guess_type
 from myapp.forms import PersonForm
 from myapp.models import Contract, File, Person
-
-from apps.book.models import User,Course,BookItem
+from apps.book.models import Course,BookItem
 
 from ragendja.dbutils import get_object_or_404
 from ragendja.template import render_to_response
@@ -23,7 +22,7 @@ class BookAddForm(forms.ModelForm):
     description = djangoforms.CharField(widget=djangoforms.Textarea,required=False)
     class Meta:
         model = BookItem          
-        exclude = ['book_id', 'post_date', ]
+        exclude = ['book_id', 'post_date', 'owner', ]
 
 
 
@@ -55,22 +54,28 @@ def book_add(request):
         form = BookAddForm(request.POST)
         
         if form.is_valid():
-            entity = form.save(commit=False)
-            
-            # Set valid_date
-            
-            # Auto-increment book_id, starting from 1000
-            q = BookItem.all()
-            q.order("-book_id")
-            results = q.fetch(1)
-            if len(results) == 0:
-                last_id = 1000
+            if request.user.is_authenticated():
+                entity = form.save(commit=False)
+                # Set user
+                entity.owner = request.user
+                
+                # Set valid_date
+                
+                # Auto-increment book_id, starting from 1000
+                q = BookItem.all()
+                q.order("-book_id")
+                results = q.fetch(1)
+                if len(results) == 0:
+                    last_id = 1000
+                else:
+                    last_id = results[0].book_id
+                entity.book_id = last_id + 1
+                
+                entity.put()
+                return HttpResponseRedirect("/book/")
             else:
-                last_id = results[0].book_id
-            entity.book_id = last_id + 1
-            
-            entity.put()
-            return HttpResponseRedirect("/book/")
+                # not authenticated
+                return HttpResponseRedirect("/book/")
         else:
             template_values = {
                     'form' : form,
