@@ -32,6 +32,8 @@
     <div class="book_pop">
     <h2>
         {% trans "Book details" %} &nbsp; · · · · · · &nbsp;
+        <span class="pl">(&nbsp;<a href="{% url apps.book.views.book_add_douban %}">{% trans "Add from Douban" %}</a>&nbsp;)
+        </span>
     </h2>
     <form id="addbookform" name="addBook" method="post" action="">
         <table align="center">

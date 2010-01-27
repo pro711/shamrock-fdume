@@ -15,6 +15,12 @@ from myapp.forms import PersonForm
 from myapp.models import Contract, File, Person
 from apps.book.models import BookItem
 from apps.lesson.models import Lesson
+#~ from douban import service as dbservice
+import douban.service
+# Please use your own api key instead. e.g. :
+#APIKEY = "23eeeb4347bdd26bfc6b7ee9a3b755dd"
+APIKEY = ''
+SECRET = ''
 
 
 from ragendja.dbutils import get_object_or_404
@@ -25,7 +31,11 @@ class BookAddForm(forms.ModelForm):
     class Meta:
         model = BookItem          
         exclude = ['book_id', 'post_date', 'owner', ]
-
+        
+class BookAddDoubanForm(djangoforms.Form):
+    search_text = djangoforms.CharField(required=False, max_length=100)
+    
+    
 
 
 
@@ -98,7 +108,57 @@ def book_detail(request, book_id):
                 }
         return render_to_response(request, "book/book_detail.html", template_values)
 
-
+def book_add_douban(request):
+    if request.method == 'GET':
+        form = BookAddDoubanForm()
+        template_values = {
+                'form' : form,
+                'step' : 1,
+                }
+        return render_to_response(request, "book/book_add_douban.html", template_values)
+    else:
+        form = BookAddDoubanForm(request.POST)
+        if form.is_valid():
+            books = []
+            search_text = form.cleaned_data['search_text']
+            client = douban.service.DoubanService(api_key=APIKEY)
+            feed = client.SearchBook(search_text)
+            for item in feed.entry:
+                #~ assert entry.title.text == '安徒生童话(永远的珍藏)'
+                #~ assert entry.GetAlternateLink().href == "http://www.douban.com/subject/1489401/"
+                #~ assert any(att.name == 'isbn10' for att in entry.attribute)
+                #~ assert any(att.name == 'isbn13' for att in entry.attribute)
+                #~ assert any(att.name == 'translator' for att in entry.attribute)
+                #~ assert any(att.text == '叶君健' for att in entry.attribute)
+                #~ assert any(att.text == '平装' for att in entry.attribute)
+                # FIXME: Needs improvement
+                author  = ' '.join([author.name.text for author in item.author])
+                publisher = filter(lambda x:x.name=='publisher',item.attribute)[0].text
+                #~ price = filter(lambda x:x.name=='price',item.attribute)[0]
+                price ='10.00'
+                image_url = item.GetImageLink().href
+                link = item.GetAlternateLink().href
+                books.append({
+                    'title' : item.title.text,
+                    'author' : author,
+                    'publisher' : publisher,
+                    'price' : price,
+                    'summary' : item.summary,
+                    'image_url' : image_url,
+                    'link' : link,
+                    })
+            template_values = {
+                    'form' : form,
+                    'step' : 2,
+                    'books' : books,
+                    }
+            return render_to_response(request, "book/book_add_douban.html", template_values)
+        else:
+            template_values = {
+                    'form' : form,
+                    }
+            return render_to_response(request, "book/book_add_douban.html", template_values)
+            
 
 
 
