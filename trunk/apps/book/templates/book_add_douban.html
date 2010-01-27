@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %} {% trans "Books" %} {% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/css/default.css" />
+{% endblock %}
+
+
+{% block header %}
+<div id="wrapper">
+
+{% include "book_header.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+<div id="content">
+    
+    <h1>{% trans "Add a book from douban" %}</h1>
+
+    <div class="grid-16-8 clearfix">
+        <div class="article">
+
+        {% ifequal step 1 %}
+            <div class="book_pop">
+            <h2>
+                {% trans "Enter book title or author to search" %} &nbsp; · · · · · · &nbsp;
+            </h2>
+            <form id="addbookform" class="search-wrap" name="addBookFromDouban" method="post" action="">
+                <table align="center">
+                {{ form.as_table }}
+                <tr><td></td><td align="center"><input id="submit" type="submit" value={% trans "Search" %} /></td></tr>
+                </table>
+            </form>
+            </div>
+        {% endifequal %}
+        
+        {% ifequal step 2 %}
+        {% for book in books %}
+            <table width="100%">
+                <tbody>
+                    <tr>
+                        <td width="100" valign="top">
+                            <a title="{{ book.title }}" href="{{ book.link }}" class="nbg">
+                                <img alt="{{ book.title }}" src="{{ book.image_url }}">
+                            </a>
+                        </td>
+                        <td valign="top">
+                            <div class="pl2">
+                                <a href="{{ book.link }}">
+                                    {{ book.title }}
+                                </a>
+                            </div>
+                            <p class="pl">
+                                {{ book.author }} / {{ book.title }} / {{ book.publisher }} / {{ book.price }}
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="ul"></p>
+        {% endfor %}
+        {% endifequal %}
+        
+        </div>
+
+
+
+        <div class="aside">
+    <h2>
+        热门标签
+         &nbsp; ·&nbsp; ·&nbsp; ·&nbsp; ·&nbsp; ·&nbsp; ·
+            <span class="pl">(
+                <a href="/book/tag/?view=type">所有热门标签</a>
+            ) </span>
+    </h2>
+
+    <ul class="hot-tags-col5">
+        
+    
+    <li>
+        <ul class="clearfix">
+            <li>
+                [文学]
+            </li>
+            <li>
+                <a href="/book/tag/小说">小说</a>
+            </li>
+        </ul>
+    </li>
+
+        
+    
+    <li>
+        <ul class="clearfix">
+            <li>
+                [流行]
+            </li>
+            <li>
+                <a href="/book/tag/漫画">漫画</a>
+            </li>
+        </ul>
+    </li>
+
+
+</ul>
+
+
+        </div>
+        <div class="extra">
+            
+        </div>
+    </div>
+    </div>
+
+
+
+{% endblock %}
+
+{% block footer %}
+{% include "book_footer.html" %}
+
+</div>
+
+{% endblock %}
