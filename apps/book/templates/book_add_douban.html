@@ -56,6 +56,21 @@
                             <p class="pl">
                                 {{ book.author }} / {{ book.title }} / {{ book.publisher }} / {{ book.price }}
                             </p>
+                            <p class="pl">
+                                {{ book.summary }}
+                            </p>
+                            <p>
+                            <form name="addBook" method="post" action="{% url apps.book.views.book_add %}">
+                                <table class="hidden" align="center">
+                                    <tr><td><input type="text" name="title" id="id_title" value="{{ book.title }}"/></td></tr>
+                                    <tr><td><input type="text" name="author" id="id_author" value="{{ book.author }}"/></td></tr>
+                                    <tr><td><input type="text" name="publisher" id="id_publisher" value="{{ book.publisher }}"/></td></tr>
+                                    <tr><td><textarea id="id_description" rows="10" cols="40" name="description"></textarea></td></tr>
+                                    <tr><td><input type="text" name="orig_price" id="id_orig_price" value="{{ book.price }}"/></td></tr>
+                                </table>
+                                <p align="center"><input id="submit" type="submit" value="{% trans "Select" %}" /></p>
+                            </form>
+                            </p>
                         </td>
                     </tr>
                 </tbody>
