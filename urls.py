@@ -13,6 +13,7 @@ urlpatterns = auth_patterns + patterns('',
     ('^admin/(.*)', admin.site.root),
     (r'^$', 'django.views.generic.simple.direct_to_template',
         {'template': 'main.html'}),
+    (r'^i18n/', include('django.conf.urls.i18n')),
     # Override the default registration form
     url(r'^account/register/$', 'registration.views.register',
         kwargs={'form_class': UserRegistrationForm},

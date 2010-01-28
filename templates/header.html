@@ -6,6 +6,8 @@
     <a href="http://www.douban.com" title={% trans "Books" %}><img src="/static/images/logosmall.gif" alt="douban" class="logo"/></a>
     <div id="nav">
             <a  href="/"><span>{% trans "Main Page" %}</span></a>
+            <a  href="/lesson/"><span>{% trans "Lessons" %}</span></a>
+            <a  href="/book/"><span>{% trans "Books" %}</span></a>
     </div>
     
 <!--
@@ -23,6 +25,8 @@
     <span class="pl">
     {% if user.is_authenticated %}
         {% trans "Welcome, " %} {{ user.username }}!
+        <a href="/settings/">{% trans "Settings" %}</a>
+        <a href="/settings/choose_lang/">{% trans "Choose language" %}</a>
         <a href="{% url django.contrib.auth.views.logout %}">
             {% trans "Logout" %}
         </a>
