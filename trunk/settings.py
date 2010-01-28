@@ -25,11 +25,11 @@ COMBINE_MEDIA = {
 
 # Change your email settings
 if on_production_server:
-    DEFAULT_FROM_EMAIL = 'bla@bla.com'
+    DEFAULT_FROM_EMAIL = 'shamrock-fdume@gmail.com'
     SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '1234567890'
+SECRET_KEY = '31415926535897932384626'
 
 #ENABLE_PROFILER = True
 #ONLY_FORCED_PROFILE = True
@@ -40,12 +40,13 @@ SECRET_KEY = '1234567890'
 
 # Enable I18N and set default language to 'en'
 USE_I18N = True
-LANGUAGE_CODE = 'en'
+LANGUAGE_CODE = 'zh_CN'
 
 # Restrict supported languages (and JS media generation)
 LANGUAGES = (
-    ('de', 'German'),
+    #~ ('de', 'German'),
     ('en', 'English'),
+    ('zh_CN', 'Chinese (Simplified)'),
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -90,7 +91,7 @@ INSTALLED_APPS = (
     'jquery',
 
     # Add blueprint CSS (http://blueprintcss.org/)
-    'blueprintcss',
+    #~ 'blueprintcss',
 
     'django.contrib.auth',
     'django.contrib.sessions',
@@ -104,6 +105,7 @@ INSTALLED_APPS = (
     'myapp',
     'apps.book',
     'apps.lesson',
+    'apps.settings',
     'registration',
     'mediautils',
 )
