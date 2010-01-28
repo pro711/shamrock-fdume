@@ -17,7 +17,7 @@ class BookItem(db.Model):
     title = db.StringProperty(required=True)
     author = db.StringProperty(required=True)
     publisher = db.StringProperty(required=True)
-    description = db.StringProperty(multiline=True)
+    description = db.TextProperty()
     owner = db.ReferenceProperty(User)
     orig_price = db.FloatProperty()
     offer_price = db.FloatProperty(required=True)
