@@ -3,6 +3,8 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect,Http404, HttpResponseForbidden,HttpResponse,HttpResponseNotFound
 from django.core.paginator import Paginator, InvalidPage
+from django.utils.translation import ugettext_lazy as _
+from django.utils.encoding import force_unicode,smart_str
 from django.views.generic.list_detail import object_list, object_detail
 from django.views.generic.create_update import create_object, delete_object, \
     update_object
@@ -122,7 +124,7 @@ def book_add_douban(request):
             books = []
             search_text = form.cleaned_data['search_text']
             client = douban.service.DoubanService(api_key=APIKEY)
-            feed = client.SearchBook(search_text)
+            feed = client.SearchBook(smart_str(search_text))
             for item in feed.entry:
                 #~ assert entry.title.text == '安徒生童话(永远的珍藏)'
                 #~ assert entry.GetAlternateLink().href == "http://www.douban.com/subject/1489401/"
