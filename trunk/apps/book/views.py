@@ -89,7 +89,7 @@ def book_add(request):
                 return HttpResponseRedirect("/book/")
             else:
                 # not authenticated
-                return HttpResponseRedirect("/book/")
+                return HttpResponseRedirect(reverse('apps.book.views.book_error', kwargs={'error_id':'1'}))
         else:
             template_values = {
                     'form' : form,
@@ -126,18 +126,16 @@ def book_add_douban(request):
             client = douban.service.DoubanService(api_key=APIKEY)
             feed = client.SearchBook(smart_str(search_text))
             for item in feed.entry:
-                #~ assert entry.title.text == '安徒生童话(永远的珍藏)'
-                #~ assert entry.GetAlternateLink().href == "http://www.douban.com/subject/1489401/"
-                #~ assert any(att.name == 'isbn10' for att in entry.attribute)
-                #~ assert any(att.name == 'isbn13' for att in entry.attribute)
-                #~ assert any(att.name == 'translator' for att in entry.attribute)
-                #~ assert any(att.text == '叶君健' for att in entry.attribute)
-                #~ assert any(att.text == '平装' for att in entry.attribute)
                 # FIXME: Needs improvement
                 author  = ' '.join([author.name.text for author in item.author])
-                publisher = filter(lambda x:x.name=='publisher',item.attribute)[0].text
-                #~ price = filter(lambda x:x.name=='price',item.attribute)[0]
-                price ='10.00'
+                try:
+                    publisher = filter(lambda x:x.name=='publisher',item.attribute)[0].text
+                except:
+                    publisher = 'N/A'
+                try:
+                    price = filter(lambda x:x.name=='price',item.attribute)[0].text
+                except:
+                    price ='0.00'
                 image_url = item.GetImageLink().href
                 link = item.GetAlternateLink().href
                 books.append({
@@ -145,7 +143,7 @@ def book_add_douban(request):
                     'author' : author,
                     'publisher' : publisher,
                     'price' : price,
-                    'summary' : item.summary,
+                    #~ 'summary' : item.summary.text,
                     'image_url' : image_url,
                     'link' : link,
                     })
@@ -162,47 +160,11 @@ def book_add_douban(request):
             return render_to_response(request, "book/book_add_douban.html", template_values)
             
 
+def book_error(request, error_id):
+    if error_id == '1':
+        template_values = {
+                'error_name' : _("Login required"),
+                'detail' : _("You need to login to perform this operation."),
+                }
+    return render_to_response(request, "book/book_error.html", template_values)
 
-
-
-
-
-
-#~ def list_people(request):
-    #~ return object_list(request, Person.all(), paginate_by=10)
-#~ 
-#~ def show_person(request, key):
-    #~ return object_detail(request, Person.all(), key)
-#~ 
-#~ def add_person(request):
-    #~ return create_object(request, form_class=PersonForm,
-        #~ post_save_redirect=reverse('myapp.views.show_person',
-                                   #~ kwargs=dict(key='%(key)s')))
-#~ 
-#~ def edit_person(request, key):
-    #~ return update_object(request, object_id=key, form_class=PersonForm,
-        #~ post_save_redirect=reverse('myapp.views.show_person',
-                                   #~ kwargs=dict(key='%(key)s')))
-#~ 
-#~ def delete_person(request, key):
-    #~ return delete_object(request, Person, object_id=key,
-        #~ post_delete_redirect=reverse('myapp.views.list_people'))
-#~ 
-#~ def download_file(request, key, name):
-    #~ file = get_object_or_404(File, key)
-    #~ if file.name != name:
-        #~ raise Http404('Could not find file with this name!')
-    #~ return HttpResponse(file.file,
-        #~ content_type=guess_type(file.name)[0] or 'application/octet-stream')
-#~ 
-#~ def create_admin_user(request):
-    #~ user = User.get_by_key_name('admin')
-    #~ if not user or user.username != 'admin' or not (user.is_active and
-            #~ user.is_staff and user.is_superuser and
-            #~ user.check_password('admin')):
-        #~ user = User(key_name='admin', username='admin',
-            #~ email='admin@localhost', first_name='Boss', last_name='Admin',
-            #~ is_active=True, is_staff=True, is_superuser=True)
-        #~ user.set_password('admin')
-        #~ user.put()
-    #~ return render_to_response(request, 'myapp/admin_created.html')
