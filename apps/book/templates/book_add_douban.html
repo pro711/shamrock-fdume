@@ -17,28 +17,32 @@
 {% block content %}
 
 <div id="content">
-    
-    <h1>{% trans "Add a book from douban" %}</h1>
-
+    <h1>
+        {% trans "Add a book from douban" %}
+    </h1>
     <div class="grid-16-8 clearfix">
         <div class="article">
-
-        {% ifequal step 1 %}
+            {% ifequal step 1 %}
             <div class="book_pop">
-            <h2>
-                {% trans "Enter book title or author to search" %} &nbsp; · · · · · · &nbsp;
-            </h2>
-            <form id="addbookform" class="search-wrap" name="addBookFromDouban" method="post" action="">
-                <table align="center">
-                {{ form.as_table }}
-                <tr><td></td><td align="center"><input id="submit" type="submit" value={% trans "Search" %} /></td></tr>
-                </table>
-            </form>
+                <h2>
+                    {% trans "Enter book title or author to search" %} &nbsp; · · · · · ·
+                    &nbsp;
+                </h2>
+                <form id="addbookform" class="search-wrap" name="addBookFromDouban" method="post"
+                action="">
+                    <table align="center">
+                        {{ form.as_table }}
+                        <tr>
+                            <td>
+                            </td>
+                            <td align="center">
+                                <input id="submit" type="submit" value={% trans "Search" %} />
+                            </td>
+                        </tr>
+                    </table>
+                </form>
             </div>
-        {% endifequal %}
-        
-        {% ifequal step 2 %}
-        {% for book in books %}
+            {% endifequal %} {% ifequal step 2 %} {% for book in books %}
             <table width="100%">
                 <tbody>
                     <tr>
@@ -54,81 +58,61 @@
                                 </a>
                             </div>
                             <p class="pl">
-                                {{ book.author }} / {{ book.title }} / {{ book.publisher }} / {{ book.price }}
+                                {{ book.author }} / {{ book.title }} / {{ book.publisher }} / {{ book.price
+                                }}
                             </p>
                             <p class="pl">
                                 {{ book.summary }}
                             </p>
                             <p>
-                            <form name="addBook" method="post" action="{% url apps.book.views.book_add %}">
-                                <table class="hidden" align="center">
-                                    <tr><td><input type="text" name="title" id="id_title" value="{{ book.title }}"/></td></tr>
-                                    <tr><td><input type="text" name="author" id="id_author" value="{{ book.author }}"/></td></tr>
-                                    <tr><td><input type="text" name="publisher" id="id_publisher" value="{{ book.publisher }}"/></td></tr>
-                                    <tr><td><textarea id="id_description" rows="10" cols="40" name="description"></textarea></td></tr>
-                                    <tr><td><input type="text" name="orig_price" id="id_orig_price" value="{{ book.price }}"/></td></tr>
-                                </table>
-                                <p align="center"><input id="submit" type="submit" value="{% trans "Select" %}" /></p>
-                            </form>
+                                <form name="addBook" method="post" action="{% url apps.book.views.book_add %}">
+                                    <table class="hidden" align="center">
+                                        <tr>
+                                            <td>
+                                                <input type="text" name="title" id="id_title" value="{{ book.title }}"
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="text" name="author" id="id_author" value="{{ book.author }}"
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="text" name="publisher" id="id_publisher" value="{{ book.publisher }}"
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <textarea id="id_description" rows="10" cols="40" name="description">
+                                                </textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="text" name="orig_price" id="id_orig_price" value="{{ book.price }}"
+                                                />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <p align="center">
+                                        <input id="submit" type="submit" value="{% trans " Select " %}" />
+                                    </p>
+                                </form>
                             </p>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <p class="ul"></p>
-        {% endfor %}
-        {% endifequal %}
-        
-        </div>
-
-
-
-        <div class="aside">
-    <h2>
-        热门标签
-         &nbsp; ·&nbsp; ·&nbsp; ·&nbsp; ·&nbsp; ·&nbsp; ·
-            <span class="pl">(
-                <a href="/book/tag/?view=type">所有热门标签</a>
-            ) </span>
-    </h2>
-
-    <ul class="hot-tags-col5">
-        
-    
-    <li>
-        <ul class="clearfix">
-            <li>
-                [文学]
-            </li>
-            <li>
-                <a href="/book/tag/小说">小说</a>
-            </li>
-        </ul>
-    </li>
-
-        
-    
-    <li>
-        <ul class="clearfix">
-            <li>
-                [流行]
-            </li>
-            <li>
-                <a href="/book/tag/漫画">漫画</a>
-            </li>
-        </ul>
-    </li>
-
-
-</ul>
-
-
-        </div>
-        <div class="extra">
-            
+            <p class="ul">
+            </p>
+            {% endfor %} {% endifequal %}
         </div>
     </div>
-    </div>
+</div>
 
 
 
