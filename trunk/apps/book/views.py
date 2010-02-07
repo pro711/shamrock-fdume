@@ -45,7 +45,7 @@ def book_index(request):
     q = BookItem.all()
     q.order("-post_date")
     results = q.fetch(8)
-    #FIXME: odd numbers fetched
+    #FIXED: odd numbers fetched
     num = len(results)
     items = [results[2*n:2*n+2] for n in range(num/2)]
     if num < 8 and (num%2 == 1) :
