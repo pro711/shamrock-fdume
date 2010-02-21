@@ -25,7 +25,7 @@ COMBINE_MEDIA = {
 
 # Change your email settings
 if on_production_server:
-    DEFAULT_FROM_EMAIL = 'shamrock-fdume@gmail.com'
+    DEFAULT_FROM_EMAIL = 'admin@shamrock-fdume.appspotmail.com'
     SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 # Make this unique, and don't share it with anybody.

@@ -110,11 +110,11 @@ class RegistrationManager(models.Manager):
         """
         from registration.signals import user_registered
         # prepend "key_" to the key_name, because key_names can't start with numbers
-        #~ new_user = User(username=username, key_name="key_"+username.lower(),
-            #~ email=email, is_active=False)
-        # DEBUG: BY PRO711, temporarily set to active
         new_user = User(username=username, key_name="key_"+username.lower(),
-            email=email, is_active=True)
+            email=email, is_active=False)
+        # FIXME: BY PRO711, temporarily set to active
+        #~ new_user = User(username=username, key_name="key_"+username.lower(),
+            #~ email=email, is_active=True)
         new_user.set_password(password)
         new_user.put()
         

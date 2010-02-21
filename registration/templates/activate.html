@@ -14,6 +14,7 @@
 
 {% endblock %}
 
+{% block content %}
 {% if account %}
   <h1>Activation successful</h1>
   <p>Congratulations, {{ account.username }}. Your account has been created successfully.</p>
@@ -21,7 +22,7 @@
   <h1>Activation failed :(</h1>
   <p>Sorry, there were problems with the activation. Please make sure that the activation link was opened correctly in your Browser. Please be also aware that activation links expire automatically.</p>
 {% endif %}
-
+{% endblock %}
 
 {% block footer %}
 {% include "footer.html" %}
