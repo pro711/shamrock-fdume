@@ -133,7 +133,7 @@ def book_add_douban(request):
                 except:
                     publisher = 'N/A'
                 try:
-                    price = filter(lambda x:x.name=='price',item.attribute)[0].text
+                    price = filter(lambda x:x.name=='price',item.attribute)[0].text.replace('元','')
                 except:
                     price ='0.00'
                 image_url = item.GetImageLink().href
@@ -168,3 +168,28 @@ def book_error(request, error_id):
                 }
     return render_to_response(request, "book/book_error.html", template_values)
 
+def book_search(request):
+    search_text=request.GET["search_text"]
+    is_searching = True
+    q=BookItem.all()
+    #FIXME:show the string message in the HTML code if the "is_searching" tab is True 
+    if len(search_text) != 0:
+        q.filter("title =",search_text)
+        message= "Results for \"%s\"" %search_text
+    else:
+        message = "If you want to search for a book, type something."
+    q.order("-post_date")
+    results = q.fetch(8)
+    num = len(results)
+    if num == 0:
+        message = "Sorry, no items matched"
+    items = [results[2*n:2*n+2] for n in range(num/2)]
+    if num < 8 and (num%2 == 1) :
+        items.append([results[-1],])
+
+    template_values = {
+            'books' : items,
+			'message' : message,
+			'is_searching': is_searching
+            }
+    return render_to_response(request, "book/book_index.html", template_values)
