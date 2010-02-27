@@ -22,7 +22,7 @@
 
     <div class="grid-16-8 clearfix">
         <div class="article">
-            <form action="/item_search" class="search-wrap">
+            <form action="/book/item_search" class="search-wrap">
             <input type="text" name="search_text" title={% trans "Title, Author" %} class="book-search j a_search_result greyinput" id="sinput">
             <input type="submit" value={% trans "Search" %} class="search-btn">
 
@@ -31,7 +31,11 @@
 
     <div class="book_pop">
     <h2>
+    {% if is_searching %}
+        <p>{{ message }}</p> &nbsp; · · · · · · &nbsp;
+    {% else %}
         {% trans "Newly Added" %} &nbsp; · · · · · · &nbsp;
+    {% endif %}
         <span class="pl">
             (&nbsp;<a href="add/">{% trans "Add a new one" %}</a>&nbsp;)
         </span>
