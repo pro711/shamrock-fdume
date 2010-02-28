@@ -8,12 +8,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-29 00:02+0800\n"
+"POT-Creation-Date: 2010-02-28 22:42+0800\n"
 "PO-Revision-Date: 2010-01-29 00:03+0800\n"
 "Last-Translator: Chen Tao <pro711@gmail.com>\n"
 "Language-Team: zh_CN <pro711@gmail.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: apps/book/views.py:166
@@ -50,7 +50,7 @@ msgid "Title, Author"
 msgstr "书名、作者"
 
 #: apps/book/templates/book_add.html:27
-#: apps/book/templates/book_add_douban.html:34
+#: apps/book/templates/book_add_douban.html:39
 #: apps/book/templates/book_index.html:27
 #: apps/lesson/templates/lesson_add.html:27
 #: apps/lesson/templates/lesson_addcomment.html:27
@@ -67,31 +67,28 @@ msgstr "书籍信息"
 msgid "Add from Douban"
 msgstr "从豆瓣添加"
 
-#: apps/book/templates/book_add.html:41 apps/book/templates/book_add.html:54
+#: apps/book/templates/book_add.html:41
 #: apps/lesson/templates/lesson_add.html:39
 #: common/django_aep_export/django_templates/templates/admin/pagination.html:11
 #: common/django_aep_export/django_templates/templates/admin/submit_line.html:3
 msgid "Save"
 msgstr "保存"
 
-#: apps/book/templates/book_add.html:49
-msgid "Title"
-msgstr "书名"
-
 #: apps/book/templates/book_add_douban.html:21
 msgid "Add a book from douban"
 msgstr "从豆瓣添加书籍"
 
-#: apps/book/templates/book_add_douban.html:29
+#: apps/book/templates/book_add_douban.html:28
 msgid "Enter book title or author to search"
 msgstr "输入书名或作者进行搜索"
 
-#: apps/book/templates/book_add_douban.html:71
-msgid "Select"
+#: apps/book/templates/book_add_douban.html:101
+#, fuzzy
+msgid " Select "
 msgstr "选择"
 
 #: apps/book/templates/book_detail.html:37
-#: apps/book/templates/book_index.html:58
+#: apps/book/templates/book_index.html:66
 msgid "Author"
 msgstr "作者"
 
@@ -109,7 +106,7 @@ msgid "Yuan"
 msgstr "元"
 
 #: apps/book/templates/book_detail.html:55
-#: apps/book/templates/book_index.html:55
+#: apps/book/templates/book_index.html:59
 msgid "Offer Price"
 msgstr "现价"
 
@@ -133,7 +130,7 @@ msgstr "发布时间"
 msgid "Valid before"
 msgstr "有效期至"
 
-#: apps/book/templates/book_detail.html:115
+#: apps/book/templates/book_detail.html:112
 #: apps/lesson/templates/lesson_detail.html:60
 msgid "Decsription"
 msgstr "简介"
@@ -160,61 +157,65 @@ msgstr "主页"
 msgid "Lessons"
 msgstr "课程"
 
-#: apps/book/templates/book_header.html:33
+#: apps/book/templates/book_header.html:24
 #: apps/lesson/templates/lesson_header.html:23 templates/header.html:27
 msgid "Welcome, "
 msgstr "欢迎，"
 
-#: apps/book/templates/book_header.html:34
+#: apps/book/templates/book_header.html:25
 #: apps/lesson/templates/lesson_header.html:24 templates/header.html:28
 msgid "Settings"
 msgstr "设置"
 
-#: apps/book/templates/book_header.html:35
+#: apps/book/templates/book_header.html:26
 #: apps/lesson/templates/lesson_header.html:25
 #: apps/settings/templates/choose_lang.html:4
 #: apps/settings/templates/choose_lang.html:18 templates/header.html:29
 msgid "Choose language"
 msgstr "选择语言"
 
-#: apps/book/templates/book_header.html:37
+#: apps/book/templates/book_header.html:28
 #: apps/lesson/templates/lesson_header.html:27 templates/header.html:31
 msgid "Logout"
 msgstr "退出"
 
-#: apps/book/templates/book_header.html:40
+#: apps/book/templates/book_header.html:31
 #: apps/lesson/templates/lesson_header.html:30 templates/header.html:34
 msgid "Welcome, please"
 msgstr "欢迎，请"
 
-#: apps/book/templates/book_header.html:42
+#: apps/book/templates/book_header.html:33
 #: apps/lesson/templates/lesson_header.html:32
 #: registration/templates/login.html:4 templates/header.html:36
 msgid "Login"
 msgstr "登录"
 
-#: apps/book/templates/book_header.html:44
+#: apps/book/templates/book_header.html:35
 #: apps/lesson/templates/lesson_header.html:34 templates/header.html:38
 msgid "or"
 msgstr "或"
 
-#: apps/book/templates/book_header.html:46
+#: apps/book/templates/book_header.html:37
 #: apps/lesson/templates/lesson_header.html:36
 #: registration/templates/registration_form.html:4 templates/header.html:40
 msgid "Register"
 msgstr "注册"
 
-#: apps/book/templates/book_index.html:34
+#: apps/book/templates/book_index.html:37
 #: apps/lesson/templates/lesson_index.html:32
 msgid "Newly Added"
 msgstr "新增"
 
-#: apps/book/templates/book_index.html:36
-#: apps/lesson/templates/lesson_index.html:36
+#: apps/book/templates/book_index.html:40
 msgid "Add a new one"
 msgstr "添加一条新信息"
 
+#: apps/book/templates/book_index.html:62
+msgid "Sold"
+msgstr "已售出"
+
 #: apps/lesson/templates/lesson_add.html:21
+#: apps/lesson/templates/lesson_index.html:36
 msgid "Add a new lesson"
 msgstr "添加一门新课程"
 
@@ -1008,3 +1009,6 @@ msgstr ""
 #: registration/models.py:231
 msgid "registration profiles"
 msgstr ""
+
+#~ msgid "Title"
+#~ msgstr "书名"
