@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-28 22:42+0800\n"
+"POT-Creation-Date: 2010-02-28 23:42+0800\n"
 "PO-Revision-Date: 2010-01-29 00:03+0800\n"
 "Last-Translator: Chen Tao <pro711@gmail.com>\n"
 "Language-Team: zh_CN <pro711@gmail.com>\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: apps/book/views.py:166
+#: apps/book/views.py:165
 msgid "Login required"
 msgstr "需要登录"
 
-#: apps/book/views.py:167
+#: apps/book/views.py:166
 msgid "You need to login to perform this operation."
 msgstr "您需要登录来完成操作"
 
@@ -150,6 +150,7 @@ msgstr "主页"
 
 #: apps/book/templates/book_header.html:9
 #: apps/lesson/templates/lesson_add.html:3
+#: apps/lesson/templates/lesson_all.html:3
 #: apps/lesson/templates/lesson_detail.html:3
 #: apps/lesson/templates/lesson_header.html:9
 #: apps/lesson/templates/lesson_index.html:3
@@ -233,13 +234,18 @@ msgstr "添加一条评论"
 msgid "Add comment"
 msgstr "发表评论"
 
+#: apps/lesson/templates/lesson_all.html:21
+#, fuzzy
+msgid "All Lessons"
+msgstr "课程"
+
 #: apps/lesson/templates/lesson_detail.html:37
-#: apps/lesson/templates/lesson_index.html:56
+#: apps/lesson/templates/lesson_index.html:63
 msgid "Instructor"
 msgstr "老师"
 
 #: apps/lesson/templates/lesson_detail.html:45
-#: apps/lesson/templates/lesson_index.html:60
+#: apps/lesson/templates/lesson_index.html:67
 msgid "Views"
 msgstr "次查看"
 
@@ -247,7 +253,12 @@ msgstr "次查看"
 msgid "Comments"
 msgstr "评论"
 
-#: apps/lesson/templates/lesson_index.html:58
+#: apps/lesson/templates/lesson_index.html:43
+#, fuzzy
+msgid "View All Lessons"
+msgstr "课程"
+
+#: apps/lesson/templates/lesson_index.html:65
 msgid "Tags"
 msgstr "标签"
 
