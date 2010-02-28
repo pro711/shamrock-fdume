@@ -172,7 +172,7 @@ def book_search(request):
     search_text=request.GET["search_text"]
     is_searching = True
     q=BookItem.all()
-    #FIXME:show the string message in the HTML code if the "is_searching" tab is True 
+    #FIXME:dual language needed
     if len(search_text) != 0:
         q.filter("title =",search_text)
         message= "Results for \"%s\"" %search_text
