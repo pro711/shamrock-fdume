@@ -48,6 +48,39 @@ def lesson_index(request):
     
     return render_to_response(request, "lesson/lesson_index.html", template_values)
 
+def lesson_all(request):
+    q = Lesson.all()
+    q.order("-post_date")
+    # Paginate using django's pagination tools
+    paginator = Paginator(q, 10)
+    page = request.GET.get('page', 1)
+    page_number = int(page)
+    try:
+        page_obj = paginator.page(page_number)
+    except InvalidPage:
+        raise Http404
+    
+    template_values = {
+        'object_list': page_obj.object_list,
+        'paginator': paginator,
+        'page_obj': page_obj,
+
+        'is_paginated': page_obj.has_other_pages(),
+        'results_per_page': paginator.per_page,
+        'has_next': page_obj.has_next(),
+        'has_previous': page_obj.has_previous(),
+        'page': page_obj.number,
+        'next': page_obj.next_page_number(),
+        'previous': page_obj.previous_page_number(),
+        'first_on_page': page_obj.start_index(),
+        'last_on_page': page_obj.end_index(),
+        'pages': paginator.num_pages,
+        'hits': paginator.count,
+        'page_range': paginator.page_range,
+    }
+    
+    return render_to_response(request, "lesson/lesson_all.html", template_values)
+
 def lesson_list(request):
     pass
 
