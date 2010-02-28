@@ -32,7 +32,7 @@ class BookAddForm(forms.ModelForm):
     description = djangoforms.CharField(widget=djangoforms.Textarea,required=False)
     class Meta:
         model = BookItem          
-        exclude = ['book_id', 'post_date', 'owner', ]
+        exclude = ['book_id', 'post_date', 'owner','sold' ]
         
 class BookAddDoubanForm(djangoforms.Form):
     search_text = djangoforms.CharField(required=False, max_length=100)
@@ -72,7 +72,6 @@ def book_add(request):
                 entity = form.save(commit=False)
                 # Set user
                 entity.owner = request.user
-                
                 # Set valid_date
                 
                 # Auto-increment book_id, starting from 1000
