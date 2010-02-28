@@ -56,7 +56,18 @@
                             </span>
                             <strong class="rating_num">
                                 {{ e.offer_price }} &nbsp;{% trans "Yuan" %}
-                            </strong>                        </div>
+                            </strong>
+                            <br>
+                            <span class="pl">
+                                {% trans "Sold" %}:
+                            </span>
+                            {{ e.sold }}
+                            {% if authenticated %}
+                                <span class="pl">
+                                (&nbsp;<a href="mark_as_sold/">{% trans "Click here to mark it as sold" %}</a>&nbsp;)
+                                </span>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
                 <div id="interest_sectl">

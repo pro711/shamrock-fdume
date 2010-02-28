@@ -215,6 +215,10 @@ msgstr "添加一条新信息"
 msgid "Sold"
 msgstr "已售出"
 
+#: apps/book/templates/book_detail.html:67
+msgid "Click here to mark it as sold"
+msgstr "单击此处标记为已售出"
+
 #: apps/lesson/templates/lesson_add.html:21
 #: apps/lesson/templates/lesson_index.html:36
 msgid "Add a new lesson"

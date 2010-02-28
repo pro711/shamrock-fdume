@@ -106,6 +106,7 @@ def book_detail(request, book_id):
     else:
         template_values = {
                 'e' : results[0],
+                'authenticated' : ((results[0].owner == request.user) and (results[0].sold == False))
                 }
         return render_to_response(request, "book/book_detail.html", template_values)
 
@@ -192,3 +193,11 @@ def book_search(request):
 			'is_searching': is_searching
             }
     return render_to_response(request, "book/book_index.html", template_values)
+
+def book_mark_as_sold(request,book_id):
+    q = BookItem.all()
+    q.filter("book_id =", long(book_id))
+    results = q.fetch(1)
+    results[0].sold = True
+    results[0].put()
+    return HttpResponseRedirect("/book/%d/" %results[0].book_id)
