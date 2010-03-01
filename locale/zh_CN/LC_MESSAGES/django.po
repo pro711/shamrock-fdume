@@ -8,25 +8,25 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-28 23:42+0800\n"
-"PO-Revision-Date: 2010-02-28 23:46+0800\n"
+"POT-Creation-Date: 2010-03-01 22:10+0800\n"
+"PO-Revision-Date: 2010-03-01 22:11+0800\n"
 "Last-Translator: Chen Tao <pro711@gmail.com>\n"
 "Language-Team: zh_CN <pro711@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: apps/book/views.py:165
+#: apps/book/views.py:199
 msgid "Login required"
 msgstr "需要登录"
 
-#: apps/book/views.py:166
+#: apps/book/views.py:200
 msgid "You need to login to perform this operation."
 msgstr "您需要登录来完成操作"
 
 #: apps/book/templates/book_add.html:3
 #: apps/book/templates/book_add_douban.html:3
-#: apps/book/templates/book_detail.html:3
+#: apps/book/templates/book_all.html:3 apps/book/templates/book_detail.html:3
 #: apps/book/templates/book_header.html:6
 #: apps/book/templates/book_header.html:10
 #: apps/book/templates/book_index.html:3
@@ -83,12 +83,15 @@ msgid "Enter book title or author to search"
 msgstr "输入书名或作者进行搜索"
 
 #: apps/book/templates/book_add_douban.html:101
-#, fuzzy
 msgid " Select "
 msgstr "选择"
 
+#: apps/book/templates/book_all.html:21
+msgid "All Books"
+msgstr "所有书籍"
+
 #: apps/book/templates/book_detail.html:37
-#: apps/book/templates/book_index.html:66
+#: apps/book/templates/book_index.html:73
 msgid "Author"
 msgstr "作者"
 
@@ -106,31 +109,40 @@ msgid "Yuan"
 msgstr "元"
 
 #: apps/book/templates/book_detail.html:55
-#: apps/book/templates/book_index.html:59
+#: apps/book/templates/book_index.html:66
 msgid "Offer Price"
 msgstr "现价"
 
+#: apps/book/templates/book_detail.html:62
+#: apps/book/templates/book_index.html:69
+msgid "Sold"
+msgstr "已售出"
+
 #: apps/book/templates/book_detail.html:67
+msgid "Click here to mark it as sold"
+msgstr "单击此处标记为已售出"
+
+#: apps/book/templates/book_detail.html:78
 msgid "Owner"
 msgstr "转让者"
 
-#: apps/book/templates/book_detail.html:72
+#: apps/book/templates/book_detail.html:83
 msgid "Location"
 msgstr "地点"
 
-#: apps/book/templates/book_detail.html:77
+#: apps/book/templates/book_detail.html:88
 msgid "Contact"
 msgstr "联系方式"
 
-#: apps/book/templates/book_detail.html:82
+#: apps/book/templates/book_detail.html:93
 msgid "Post date"
 msgstr "发布时间"
 
-#: apps/book/templates/book_detail.html:87
+#: apps/book/templates/book_detail.html:98
 msgid "Valid before"
 msgstr "有效期至"
 
-#: apps/book/templates/book_detail.html:112
+#: apps/book/templates/book_detail.html:123
 #: apps/lesson/templates/lesson_detail.html:60
 msgid "Decsription"
 msgstr "简介"
@@ -211,13 +223,9 @@ msgstr "新增"
 msgid "Add a new one"
 msgstr "添加一条新信息"
 
-#: apps/book/templates/book_index.html:62
-msgid "Sold"
-msgstr "已售出"
-
-#: apps/book/templates/book_detail.html:67
-msgid "Click here to mark it as sold"
-msgstr "单击此处标记为已售出"
+#: apps/book/templates/book_index.html:45
+msgid "View All Books"
+msgstr "查看所有书籍"
 
 #: apps/lesson/templates/lesson_add.html:21
 #: apps/lesson/templates/lesson_index.html:36
