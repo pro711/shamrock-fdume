@@ -1,0 +1,26 @@
+Release History - Version 0.2
+
+* August 20, 2009 - 0.2
+    * gaegene.slug
+        * Fixed Issue #1 (http://bitbucket.org/gumptioncom/gaegene/issue/1/)
+    * gaegene.image
+        * Initial release
+    * gaegene.tagging
+        * Initial release
+    * gaegene.pagination
+        * Initial release
+
+* February 18, 2009 - 0.1.1
+    * Added CREDITS, HISTORY, and README files
+    * Removed all dependencies on Django utility functions. Now works with any Google App Engine project, whether you use/include Django or not.  The unit tests, however, still depend on the Django testing framework to run.
+    * gaegene.counter
+        * add_shards() now in a transaction
+    * gaegene.slug
+        * GeneSlugIndex.get_slug() now returns None if given an empty string, instead of an error.
+        * Removed dependency on django.template.defaultfilters
+
+* January 22, 2009 - 0.1
+    * gaegene.counter
+        * Initial release
+    * gaegene.slug
+        * Initial release
