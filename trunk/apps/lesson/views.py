@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect,Http404, HttpResponseForbidden,HttpResponse,HttpResponseNotFound
 from django.core.paginator import Paginator, InvalidPage
 from django.utils.encoding import force_unicode,smart_str
@@ -84,6 +85,7 @@ def lesson_all(request):
 def lesson_list(request):
     pass
 
+@login_required
 def lesson_add(request):
     if request.method == 'GET':
         form = LessonAddForm()
@@ -123,6 +125,7 @@ def lesson_add(request):
                     }
             return render_to_response(request, "lesson/lesson_add.html", template_values)
 
+@login_required
 def lesson_addcomment(request, lesson_id):
     if request.method == 'GET':
         form = LessonAddCommentForm()

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect,Http404, HttpResponseForbidden,HttpResponse,HttpResponseNotFound
 from django.core.paginator import Paginator, InvalidPage
 from django.utils.translation import ugettext_lazy as _
@@ -57,6 +58,7 @@ def book_index(request):
     
     return render_to_response(request, "book/book_index.html", template_values)
 
+@login_required
 def book_add(request):
     if request.method == 'GET':
         form = BookAddForm()
@@ -143,6 +145,7 @@ def book_all(request):
     
     return render_to_response(request, "book/book_all.html", template_values)
 
+@login_required
 def book_add_douban(request):
     if request.method == 'GET':
         form = BookAddDoubanForm()
@@ -205,27 +208,51 @@ def book_search(request):
     search_text=request.GET["search_text"]
     is_searching = True
     q=BookItem.all()
-    #FIXME:dual language needed
-    if len(search_text) != 0:
-        q.filter("title =",search_text)
-        message= "Results for \"%s\"" %search_text
-    else:
-        message = "If you want to search for a book, type something."
     q.order("-post_date")
-    results = q.fetch(8)
-    num = len(results)
-    if num == 0:
-        message = "Sorry, no items matched"
-    items = [results[2*n:2*n+2] for n in range(num/2)]
-    if num < 8 and (num%2 == 1) :
-        items.append([results[-1],])
 
+
+    if len(search_text) != 0:
+        message= _('Results for "%s"') % search_text
+        results = filter(lambda x:search_text in x.title+x.author+x.publisher+
+                    (x.tag if x.tag is not None else ''),q)
+        
+        if len(results) == 0:
+            message = _("Sorry, no items matched")
+    else:
+        message = _("If you want to search for a book, type in something.")
+        results = []
+    
+    # Paginate using django's pagination tools
+    paginator = Paginator(results, 10)
+    page = request.GET.get('page', 1)
+    page_number = int(page)
+    try:
+        page_obj = paginator.page(page_number)
+    except InvalidPage:
+        raise Http404
+    
     template_values = {
-            'books' : items,
-			'message' : message,
-			'is_searching': is_searching
-            }
-    return render_to_response(request, "book/book_index.html", template_values)
+        'object_list': page_obj.object_list,
+        'paginator': paginator,
+        'page_obj': page_obj,
+
+        'is_paginated': page_obj.has_other_pages(),
+        'results_per_page': paginator.per_page,
+        'has_next': page_obj.has_next(),
+        'has_previous': page_obj.has_previous(),
+        'page': page_obj.number,
+        'next': page_obj.next_page_number(),
+        'previous': page_obj.previous_page_number(),
+        'first_on_page': page_obj.start_index(),
+        'last_on_page': page_obj.end_index(),
+        'pages': paginator.num_pages,
+        'hits': paginator.count,
+        'page_range': paginator.page_range,
+        
+        'message' : message,
+    }
+
+    return render_to_response(request, "book/book_search.html", template_values)
 
 def book_mark_as_sold(request,book_id):
     q = BookItem.all()
