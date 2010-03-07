@@ -56,7 +56,7 @@
     {% for e in pair %}
      <li class="clearfix">
         <a href="{{e.get_absolute_url}}">
-        <img class="cover" alt="{{e.title}}" src="/static/images/book-default-medium.gif">
+        <img class="cover" alt="{{e.title}}" src="{{e.image_url}}">
         </a>
         <h2>
             <a href="{{e.get_absolute_url}}">{{e.title}}</a>
