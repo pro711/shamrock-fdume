@@ -28,6 +28,7 @@ class BookItem(db.Model):
     valid_date = db.DateTimeProperty()
     tag = db.StringProperty()
     course = db.ReferenceProperty(Lesson)
+    image_url = db.StringProperty(default="/static/images/book-default-medium.gif")
 
 
     def __unicode__(self):

@@ -33,7 +33,7 @@ class BookAddForm(forms.ModelForm):
     description = djangoforms.CharField(widget=djangoforms.Textarea,required=False)
     class Meta:
         model = BookItem          
-        exclude = ['book_id', 'post_date', 'owner','sold' ]
+        exclude = ['book_id', 'post_date', 'owner','sold']
         
 class BookAddDoubanForm(djangoforms.Form):
     search_text = djangoforms.CharField(required=False, max_length=100)
@@ -172,6 +172,7 @@ def book_add_douban(request):
                     price = filter(lambda x:x.name=='price',item.attribute)[0].text.replace('元','')
                 except:
                     price ='0.00'
+                #FIXME: If the url is unreadable, it shows strange things to you
                 image_url = item.GetImageLink().href
                 link = item.GetAlternateLink().href
                 books.append({
