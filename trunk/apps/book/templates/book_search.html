@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %} {% trans "Books" %} {% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/css/default.css" />
+{% endblock %}
+
+
+{% block header %}
+<div id="wrapper">
+
+{% include "book_header.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+<div id="content">
+    <h1>
+        {% trans "Search" %}
+    </h1>
+    <div class="grid-16-8 clearfix">
+        <div class="article">
+            <h2>
+                {{ message }} &nbsp; · · · · · · &nbsp;
+            </h2>
+            <p class="ul">
+            </p>
+            {% for book in object_list %}
+                <table width="100%">
+                    <tbody>
+                        <tr>
+                            <td valign="top">
+                                <div class="pl2">
+                                    <a href="{{ book.get_absolute_url }}">
+                                        {{ book.title }}
+                                    </a>
+                                </div>
+                                <p class="pl">
+                                    {{ book.author }} / {{ book.title }} / {{ book.publisher }} / {{ book.price}}
+                                </p>
+                                <p class="pl">
+                                    {{ book.summary }}
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="ul">
+                </p>
+            {% endfor %}
+    
+            <div class="pagination">
+                <span class="step-links">
+                    {% if has_previous %}
+                        <a href="?page={{ previous }}">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ page }} of {{ pages }}.
+                    </span>
+
+                    {% if has_next %}
+                        <a href="?page={{ next }}">next</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+
+{% include "lesson_tags_aside.html" %}
+        <div class="extra">
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block footer %}
+{% include "book_footer.html" %}
+
+</div>
+
+{% endblock %}
