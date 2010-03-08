@@ -206,16 +206,17 @@ def book_error(request, error_id):
     return render_to_response(request, "book/book_error.html", template_values)
 
 def book_search(request):
-    search_text=request.GET["search_text"]
+    search_text_orig=(request.GET["search_text"]).strip()
     is_searching = True
     q=BookItem.all()
     q.order("-post_date")
 
 
-    if len(search_text) != 0:
-        message= _('Results for "%s"') % search_text
-        results = filter(lambda x:search_text in x.title+x.author+x.publisher+
-                    (x.tag if x.tag is not None else ''),q)
+    if len(search_text_orig) != 0:
+        message= _('Results for "%s"') % search_text_orig
+        for search_text in search_text_orig.split(' '):
+            results = filter(lambda x:search_text in x.title+x.author+x.publisher+
+                        (x.tag if x.tag is not None else ''),q)
         
         if len(results) == 0:
             message = _("Sorry, no items matched")
