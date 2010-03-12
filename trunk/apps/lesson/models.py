@@ -35,3 +35,31 @@ class LessonComment(db.Model):
     content = db.TextProperty(required=True)
     post_date = db.DateTimeProperty(auto_now=True)
     lesson = db.ReferenceProperty(Lesson)
+    
+    
+class LessonCommentFetcher(db.Model):
+    """
+    Information used to guide fetching lesson comments from fdubbs.
+    type       'd': directory; 'f': post file
+    path        absolute path of post
+    title       diretory or post title
+    owner       poster
+    post_date   date of post
+    timestamp   timestamp
+    processed   whether item is processed
+    """
+    type = db.StringProperty(required=True)
+    path = db.StringProperty(required=True)
+    title = db.StringProperty()
+    owner = db.StringProperty(default=_("Anonymous"))
+    post_date = db.DateTimeProperty(auto_now=True)
+    timestamp = db.DateTimeProperty(auto_now=True)
+    processed = db.BooleanProperty(default=False)
+
+
+
+
+
+
+
+
