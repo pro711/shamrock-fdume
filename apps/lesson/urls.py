@@ -6,5 +6,6 @@ urlpatterns = patterns('apps.lesson.views',
     (r'^add/$', 'lesson_add'),
     (r'^(?P<lesson_id>\d+)/$', 'lesson_detail'),
     (r'^(?P<lesson_id>\d+)/add_comment/$', 'lesson_addcomment'),
+    (r'^fetchbbs/$', 'lesson_fetchbbs'),
     (r'^all/$', 'lesson_all'),
 )

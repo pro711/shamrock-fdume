@@ -16,10 +16,13 @@ from mimetypes import guess_type
 from myapp.forms import PersonForm
 from myapp.models import Contract, File, Person
 from apps.book.models import BookItem
-from apps.lesson.models import Lesson, LessonComment
+from apps.lesson.models import Lesson, LessonComment, LessonCommentFetcher
+from xml.dom import minidom
 
 from ragendja.dbutils import get_object_or_404
 from ragendja.template import render_to_response
+
+BBS_FETCH_ENTRANCE = 'http://bbs.fudan.edu.cn/bbs/0an?path=/groups/campus.faq/Lessons/kcjs'
 
 class LessonAddForm(forms.ModelForm):
     description = djangoforms.CharField(widget=djangoforms.Textarea,required=False)
@@ -171,6 +174,7 @@ def lesson_addcomment(request, lesson_id):
 
 
 def lesson_detail(request, lesson_id):
+    """Lesson detail page."""
     q = Lesson.all()
     q.filter("lesson_id =", long(lesson_id))
     results = q.fetch(1)
@@ -189,4 +193,19 @@ def lesson_detail(request, lesson_id):
         lesson.put()
         
         return render_to_response(request, "lesson/lesson_detail.html", template_values)
+
+
+
+def lesson_fetchbbs(request):
+    """
+    Fetch lesson comments from FDUBBS.
+    Iteration of this function performs a traverse of bbs pages starting
+    from the path defined in BBS_FETCH_ENTRANCE.
+    """
+    if request.method == 'GET':
+        path = request.GET.get('path', '')
+        #
+    else:
+        raise Http404
+    
 
