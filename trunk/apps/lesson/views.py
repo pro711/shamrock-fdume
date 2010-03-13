@@ -2,7 +2,7 @@
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect,Http404, HttpResponseForbidden,HttpResponse,HttpResponseNotFound
+from django.http import HttpResponseRedirect,Http404, HttpResponseForbidden,HttpResponse,HttpResponseNotFound, HttpResponseServerError
 from django.core.paginator import Paginator, InvalidPage
 from django.utils.encoding import force_unicode,smart_str
 from django.views.generic.list_detail import object_list, object_detail
@@ -12,12 +12,15 @@ from django import forms as djangoforms
 
 from google.appengine.ext import db
 from google.appengine.ext.db import djangoforms as forms
+from google.appengine.api import urlfetch
 from mimetypes import guess_type
 from myapp.forms import PersonForm
 from myapp.models import Contract, File, Person
 from apps.book.models import BookItem
 from apps.lesson.models import Lesson, LessonComment, LessonCommentFetcher
 from xml.dom import minidom
+import datetime
+import urlparse
 
 from ragendja.dbutils import get_object_or_404
 from ragendja.template import render_to_response
@@ -204,7 +207,63 @@ def lesson_fetchbbs(request):
     """
     if request.method == 'GET':
         path = request.GET.get('path', '')
-        #
+        if len(path) == 0:
+            from_db = True  # whether path is from datastore or specified by user
+            # Get one from datastore
+            q = LessonCommentFetcher.all()
+            q.filter('processed =', False)
+            q.filter('type =', 'd')
+            q.order("-timestamp")
+            results = q.fetch(1)
+            if len(results) == 0:
+                raise Http404, "Nothing to process in datastore."
+            else:
+                item = results[0]
+                path = item.path
+        else:
+            from_db = False
+
+        #~ try:
+        childs = []
+        # fetch xml
+        page = urlfetch.fetch(path)
+        # parse xml
+        content = page.content
+        # a small hack to deal with gb2312 encoding problem
+        # the xml is actually gbk encoded
+        content = content.decode('gbk').encode('utf-8')
+        content = content.replace('encoding="gb2312"', 'encoding="utf-8"')
+        dom = minidom.parseString(content)
+        ent = dom.getElementsByTagName('ent')
+        for e in ent:
+            t = e.attributes['t'].value
+            rawtime = e.attributes['time'].value
+            relpath = e.attributes['path'].value   #relative path
+            title = e.firstChild.data
+            try:
+                id = e.attributes['id'].value
+            except KeyError, ex:
+                id = ''
+            # process values
+            post_date = datetime.datetime.strptime(rawtime, '%Y-%m-%dT%H:%M:%S')
+            #~ childpath = urlparse.urljoin(path, relpath)
+            #~ childpath = path[:path.rindex('/')]+relpath
+            childpath = path+relpath
+            childs.append(childpath)
+            # put entity in datastore
+            childitem = LessonCommentFetcher(type=t, path=childpath, owner=id, post_date=post_date,
+                title=title, processed=False)
+            childitem.put()
+        # mark parent item as processed
+        if from_db:
+            item.processed = True
+            item.put()
+        return HttpResponse('<html>Path:%s<br/>Item fetched:<br/> %s</html>' % (path,'<br/>'.join(childs)))
+        #~ except:
+            #~ raise HttpResponseServerError
+        
+                
+            
     else:
         raise Http404
     
