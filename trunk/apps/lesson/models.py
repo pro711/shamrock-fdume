@@ -36,6 +36,9 @@ class LessonComment(db.Model):
     post_date = db.DateTimeProperty(auto_now=True)
     lesson = db.ReferenceProperty(Lesson)
     
+    def __unicode__(self):
+        return '%s %s' % (self.comment_id, self.title)
+    
     
 class LessonCommentFetcher(db.Model):
     """
@@ -51,11 +54,14 @@ class LessonCommentFetcher(db.Model):
     type = db.StringProperty(required=True)
     path = db.StringProperty(required=True)
     title = db.StringProperty()
+    content = db.TextProperty()
     owner = db.StringProperty(default=_("Anonymous"))
-    post_date = db.DateTimeProperty(auto_now=True)
+    post_date = db.DateTimeProperty()
     timestamp = db.DateTimeProperty(auto_now=True)
     processed = db.BooleanProperty(default=False)
 
+    def __unicode__(self):
+        return '[%s] %s %s' % (self.type, self.timestamp, self.title)
 
 
 
