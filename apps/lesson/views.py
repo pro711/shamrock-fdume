@@ -212,8 +212,8 @@ def lesson_fetchbbs(request):
             # Get one from datastore
             q = LessonCommentFetcher.all()
             q.filter('processed =', False)
-            q.filter('type =', 'd')
-            q.order("-timestamp")
+            #~ q.filter('type =', 'd')
+            #~ q.order("-timestamp")
             results = q.fetch(1)
             if len(results) == 0:
                 raise Http404, "Nothing to process in datastore."
@@ -231,34 +231,58 @@ def lesson_fetchbbs(request):
         content = page.content
         # a small hack to deal with gb2312 encoding problem
         # the xml is actually gbk encoded
-        content = content.decode('gbk').encode('utf-8')
+        content = content.decode('gbk', 'ignore').encode('utf-8')
         content = content.replace('encoding="gb2312"', 'encoding="utf-8"')
         dom = minidom.parseString(content)
-        ent = dom.getElementsByTagName('ent')
-        for e in ent:
-            t = e.attributes['t'].value
-            rawtime = e.attributes['time'].value
-            relpath = e.attributes['path'].value   #relative path
-            title = e.firstChild.data
+        # get parent type
+        if len(dom.getElementsByTagName('bbs0an')) > 0:
+            typ = 'd'
+        else:
+            typ = 'f'
+
+        
+        if typ == 'd':
+            # process a directory
+            ent = dom.getElementsByTagName('ent')
+            for e in ent:
+                t = e.attributes['t'].value
+                rawtime = e.attributes['time'].value
+                relpath = e.attributes['path'].value   #relative path
+                title = e.firstChild.data
+                try:
+                    id = e.attributes['id'].value
+                except KeyError, ex:
+                    id = ''
+                # process values
+                post_date = datetime.datetime.strptime(rawtime, '%Y-%m-%dT%H:%M:%S')
+                # determine the url of directory / file
+                if t==u'f':  # is a file rather than a directory
+                    childpath = path.replace('bbs/0an', 'bbs/anc') + relpath
+                else:
+                    childpath = path + relpath
+                #~ childpath = urlparse.urljoin(path, relpath)
+                #~ childpath = path[:path.rindex('/')]+relpath
+                
+                childs.append(childpath)
+                # put entity in datastore
+                childitem = LessonCommentFetcher(type=t, path=childpath, owner=id, post_date=post_date,
+                    title=title, processed=False)
+                childitem.put()
+        elif typ == 'f':
+            # process a file
             try:
-                id = e.attributes['id'].value
-            except KeyError, ex:
-                id = ''
-            # process values
-            post_date = datetime.datetime.strptime(rawtime, '%Y-%m-%dT%H:%M:%S')
-            #~ childpath = urlparse.urljoin(path, relpath)
-            #~ childpath = path[:path.rindex('/')]+relpath
-            childpath = path+relpath
-            childs.append(childpath)
-            # put entity in datastore
-            childitem = LessonCommentFetcher(type=t, path=childpath, owner=id, post_date=post_date,
-                title=title, processed=False)
-            childitem.put()
+                text = dom.getElementsByTagName('bbsanc')[0].firstChild.data
+            except:
+                text = 'ERROR'
+            item.content = text
+            item.put()
+            childs.append(text)
+            
         # mark parent item as processed
         if from_db:
             item.processed = True
             item.put()
-        return HttpResponse('<html>Path:%s<br/>Item fetched:<br/> %s</html>' % (path,'<br/>'.join(childs)))
+        return HttpResponse('<html>Path:%s<br/>Item fetched:<br/> %s <br/>%s</html>' % (path,'<br/>'.join(childs),typ))
         #~ except:
             #~ raise HttpResponseServerError
         
