@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 from ragendja.dbutils import cleanup_relations
 from smallseg.smallseg import SEG
-
+seg = SEG()     # initialize word segmentation engine
 
 class Lesson(db.Model):
     """Lesson information."""
@@ -33,7 +33,6 @@ class Lesson(db.Model):
         
         #~ raise Exception, self.instructor
         search_tags = [self.instructor, self.name] + self.tags
-        seg = SEG()     # initialize word segmentation engine
         
         for i in range(100):
             results = q.fetch(10, 10*i)
