@@ -32,7 +32,7 @@ class LessonAddForm(forms.ModelForm):
     tags = djangoforms.CharField()
     class Meta:
         model = Lesson          
-        exclude = ['lesson_id', 'view_num', 'post_date', ]
+        exclude = ['lesson_id', 'view_num', 'post_date', 'from_bbs' ]
 
 class LessonAddCommentForm(forms.ModelForm):
     class Meta:
@@ -103,28 +103,28 @@ def lesson_add(request):
         form = LessonAddForm(request.POST)
         
         if form.is_valid():
-            if request.user.is_authenticated():
-                entity = form.save(commit=False)
-                
-                # Auto-increment lesson_id, starting from 1000
-                q = Lesson.all()
-                q.order("-lesson_id")
-                results = q.fetch(1)
-                if len(results) == 0:
-                    last_id = 1000
-                else:
-                    last_id = results[0].lesson_id
-                entity.lesson_id = last_id + 1
-                
-                # Deal with tags
-                tagstrings=form.cleaned_data['tags'].strip().split(' ')
-                entity.tags=tagstrings
-                
-                entity.put()
-                return HttpResponseRedirect("/lesson/")
+            entity = form.save(commit=False)
+            
+            # Auto-increment lesson_id, starting from 1000
+            q = Lesson.all()
+            q.order("-lesson_id")
+            results = q.fetch(1)
+            if len(results) == 0:
+                last_id = 1000
             else:
-                # not authenticated
-                return HttpResponseRedirect("/lesson/")
+                last_id = results[0].lesson_id
+            entity.lesson_id = last_id + 1
+            
+            # Deal with tags
+            tagstrings=form.cleaned_data['tags'].strip().split(' ')
+            entity.tags=tagstrings
+            
+            entity.put()
+            
+            # Automatically add comments from datastore
+            entity.add_comment_fdubbs()
+            
+            return HttpResponseRedirect("/lesson/")
         else:
             template_values = {
                     'form' : form,

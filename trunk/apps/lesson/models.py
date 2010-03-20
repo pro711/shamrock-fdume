@@ -6,7 +6,7 @@ from google.appengine.ext import db
 from django.contrib.auth.models import User
 
 from ragendja.dbutils import cleanup_relations
-
+from smallseg.smallseg import SEG
 
 
 class Lesson(db.Model):
@@ -20,11 +20,51 @@ class Lesson(db.Model):
     tags = db.ListProperty(str)
 
     def __unicode__(self):
-        return '%s %s' % (self.instructor, self.name)
+        return '%s %s %s' % (self.lesson_id, self.instructor, self.name)
 
     @permalink
     def get_absolute_url(self):
         return ('apps.lesson.views.lesson_detail', (), {'lesson_id': smart_str(self.lesson_id)})
+        
+    def add_comment_fdubbs(self):
+        '''Find lesson comments in datastore with this lesson and add them.'''
+        q = LessonCommentFetcher.all()
+        q.filter('processed =', True).filter('type =', 'f')
+        
+        #~ raise Exception, self.instructor
+        search_tags = [self.instructor, self.name] + self.tags
+        seg = SEG()     # initialize word segmentation engine
+        
+        for i in range(100):
+            results = q.fetch(10, 10*i)
+
+            for e in results:
+                matched = 0
+                title = e.title
+                title_slices = seg.cut(title.encode('utf-8'))   # split words
+                for t in search_tags:
+                    for s in title_slices:
+                        len_s = len(s)
+                        if len_s>1 and s in t:      # single character is futile
+                            matched = matched + len_s*len_s     # power weight
+                            #~ break
+                if matched > 10:    # FIXME: a simple threshold, needs a better algorithm
+                    # Put in datastore
+                    # Auto-increment comment_id, starting from 1
+                    qc = LessonComment.all()
+                    qc.order("-comment_id")
+                    results = qc.fetch(1)
+                    if len(results) == 0:
+                        last_id = 0
+                    else:
+                        last_id = results[0].comment_id
+                    
+                    comment = LessonComment(comment_id=last_id+1,title=e.title,content=e.content,
+                                            lesson=self,from_bbs=True)
+                    comment.put()
+            
+            if len(results) < 10:       # we have finished processing
+                break
 
 
 class LessonComment(db.Model):
@@ -35,6 +75,7 @@ class LessonComment(db.Model):
     content = db.TextProperty(required=True)
     post_date = db.DateTimeProperty(auto_now=True)
     lesson = db.ReferenceProperty(Lesson)
+    from_bbs = db.BooleanProperty()
     
     def __unicode__(self):
         return '%s %s' % (self.comment_id, self.title)
