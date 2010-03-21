@@ -1,0 +1,5 @@
+cron:
+- description: fetch comment form bbs every minute
+  url: /lesson/fetchbbs/
+  schedule: every 1 mins
+ 
