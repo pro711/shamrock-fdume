@@ -59,7 +59,7 @@ class Lesson(db.Model):
                         last_id = results[0].comment_id
                     
                     qc = LessonComment.all()
-                    results = qc.filter('title =', e.title)
+                    results = qc.filter('lesson =', self).filter('title =', e.title)
                     if not len(results):
                         comment = LessonComment(comment_id=last_id+1,title=e.title,content=e.content,
                                             lesson=self,from_bbs=True)
