@@ -292,3 +292,10 @@ def lesson_fetchbbs(request):
         raise Http404
     
 
+def refresh_lessons(request):
+    """Refresh comments of lessons repeatly by cron"""
+    q=Lesson.all()
+    for i in range(100):
+        results = q.fetch(10,10*i)
+        [t.add_comment_fdubbs() for t in results]
+    return HttpResponse('Refresh OK')
