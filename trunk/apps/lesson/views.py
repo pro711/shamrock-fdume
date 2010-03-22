@@ -37,7 +37,7 @@ class LessonAddForm(forms.ModelForm):
 class LessonAddCommentForm(forms.ModelForm):
     class Meta:
         model = LessonComment          
-        exclude = ['comment_id', 'commenter', 'lesson', 'post_date', ]
+        exclude = ['comment_id', 'commenter', 'lesson', 'post_date', 'refreshed_time' ]
 
 
 def lesson_index(request):
