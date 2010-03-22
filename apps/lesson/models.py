@@ -15,9 +15,10 @@ class Lesson(db.Model):
     name = db.StringProperty(required=True)
     instructor = db.StringProperty(required=True)
     description = db.StringProperty(multiline=True)
-    post_date = db.DateTimeProperty(auto_now=True)
+    post_date = db.DateTimeProperty(auto_now_add=True)
     view_num = db.IntegerProperty(default=0)
     tags = db.ListProperty(str)
+    refreshed_time = db.DateTimeProperty(auto_now=True)
 
     def __unicode__(self):
         return '%s %s %s' % (self.lesson_id, self.instructor, self.name)
