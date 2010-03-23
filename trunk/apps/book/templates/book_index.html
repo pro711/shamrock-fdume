@@ -66,8 +66,11 @@
             {% trans "Offer Price" %}:&nbsp; {{ e.offer_price }}
             </span>
             <br>
-            {% trans "Sold" %}:&nbsp;
-            {{e.sold}}
+            {% if e.sold %}
+                {% trans "Sold out" %}
+            {% else %}
+                {% trans "On sale" %}
+            {% endif %}
             <br>
             <br>
             {% trans "Author" %}:&nbsp;
@@ -76,7 +79,7 @@
         </p>
         <div class="entry-list-col2-review color-gray">
             <p class="pt6">
-                {{e.description}}
+                {{e.description|truncatewords:'100'}}
             </p>
         </div>
     </li>
