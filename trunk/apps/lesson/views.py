@@ -233,7 +233,12 @@ def lesson_fetchbbs(request):
         # the xml is actually gbk encoded
         content = content.decode('gbk', 'ignore').encode('utf-8')
         content = content.replace('encoding="gb2312"', 'encoding="utf-8"')
-        dom = minidom.parseString(content)
+        
+        try:
+            dom = minidom.parseString(content)
+        except:
+            return HttpResponse('Mal-formated xml.')
+        
         # get parent type
         if len(dom.getElementsByTagName('bbs0an')) > 0:
             typ = 'd'
@@ -285,8 +290,6 @@ def lesson_fetchbbs(request):
         return HttpResponse('<html>Path:%s<br/>Item fetched:<br/> %s <br/>%s</html>' % (path,'<br/>'.join(childs),typ))
         #~ except:
             #~ raise HttpResponseServerError
-        
-                
             
     else:
         raise Http404

@@ -8,21 +8,42 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-01 22:10+0800\n"
-"PO-Revision-Date: 2010-03-01 22:11+0800\n"
+"POT-Creation-Date: 2010-03-23 22:59+0800\n"
+"PO-Revision-Date: 2010-03-23 23:02+0800\n"
 "Last-Translator: Chen Tao <pro711@gmail.com>\n"
 "Language-Team: zh_CN <pro711@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: apps/book/views.py:199
+#: apps/book/views.py:203
 msgid "Login required"
 msgstr "需要登录"
 
-#: apps/book/views.py:200
+#: apps/book/views.py:204
 msgid "You need to login to perform this operation."
 msgstr "您需要登录来完成操作"
+
+#: apps/book/views.py:208
+msgid "Permission denied."
+msgstr "无权访问。"
+
+#: apps/book/views.py:209
+msgid "You don't have permission to perform this operation."
+msgstr "您没有权限执行此操作。"
+
+#: apps/book/views.py:221
+#, python-format
+msgid "Results for \"%s\""
+msgstr "\"%s\" 的结果"
+
+#: apps/book/views.py:227
+msgid "Sorry, no items matched"
+msgstr "抱歉，没有对应的条目"
+
+#: apps/book/views.py:229
+msgid "If you want to search for a book, type in something."
+msgstr "如果您想要搜索一本书，请输入一些信息。"
 
 #: apps/book/templates/book_add.html:3
 #: apps/book/templates/book_add_douban.html:3
@@ -31,6 +52,7 @@ msgstr "您需要登录来完成操作"
 #: apps/book/templates/book_header.html:10
 #: apps/book/templates/book_index.html:3
 #: apps/book/templates/book_index.html:21
+#: apps/book/templates/book_search.html:3
 #: apps/lesson/templates/lesson_addcomment.html:3
 #: apps/lesson/templates/lesson_header.html:6
 #: apps/lesson/templates/lesson_header.html:10 templates/header.html:6
@@ -52,6 +74,7 @@ msgstr "书名、作者"
 #: apps/book/templates/book_add.html:27
 #: apps/book/templates/book_add_douban.html:39
 #: apps/book/templates/book_index.html:27
+#: apps/book/templates/book_search.html:21
 #: apps/lesson/templates/lesson_add.html:27
 #: apps/lesson/templates/lesson_addcomment.html:27
 #: apps/lesson/templates/lesson_index.html:28
@@ -82,7 +105,7 @@ msgstr "从豆瓣添加书籍"
 msgid "Enter book title or author to search"
 msgstr "输入书名或作者进行搜索"
 
-#: apps/book/templates/book_add_douban.html:101
+#: apps/book/templates/book_add_douban.html:107
 msgid " Select "
 msgstr "选择"
 
@@ -91,7 +114,7 @@ msgid "All Books"
 msgstr "所有书籍"
 
 #: apps/book/templates/book_detail.html:37
-#: apps/book/templates/book_index.html:73
+#: apps/book/templates/book_index.html:76
 msgid "Author"
 msgstr "作者"
 
@@ -114,35 +137,44 @@ msgid "Offer Price"
 msgstr "现价"
 
 #: apps/book/templates/book_detail.html:62
-#: apps/book/templates/book_index.html:69
-msgid "Sold"
+msgid "Status"
+msgstr "状态"
+
+#: apps/book/templates/book_detail.html:65
+#: apps/book/templates/book_index.html:70
+msgid "Sold out"
 msgstr "已售出"
 
 #: apps/book/templates/book_detail.html:67
+#: apps/book/templates/book_index.html:72
+msgid "On sale"
+msgstr "出售中"
+
+#: apps/book/templates/book_detail.html:74
 msgid "Click here to mark it as sold"
 msgstr "单击此处标记为已售出"
 
-#: apps/book/templates/book_detail.html:78
+#: apps/book/templates/book_detail.html:85
 msgid "Owner"
 msgstr "转让者"
 
-#: apps/book/templates/book_detail.html:83
+#: apps/book/templates/book_detail.html:90
 msgid "Location"
 msgstr "地点"
 
-#: apps/book/templates/book_detail.html:88
+#: apps/book/templates/book_detail.html:95
 msgid "Contact"
 msgstr "联系方式"
 
-#: apps/book/templates/book_detail.html:93
+#: apps/book/templates/book_detail.html:100
 msgid "Post date"
 msgstr "发布时间"
 
-#: apps/book/templates/book_detail.html:98
+#: apps/book/templates/book_detail.html:105
 msgid "Valid before"
 msgstr "有效期至"
 
-#: apps/book/templates/book_detail.html:123
+#: apps/book/templates/book_detail.html:130
 #: apps/lesson/templates/lesson_detail.html:60
 msgid "Decsription"
 msgstr "简介"
@@ -226,6 +258,10 @@ msgstr "添加一条新信息"
 #: apps/book/templates/book_index.html:45
 msgid "View All Books"
 msgstr "查看所有书籍"
+
+#: apps/lesson/models.py:113
+msgid "Anonymous"
+msgstr "匿名人士"
 
 #: apps/lesson/templates/lesson_add.html:21
 #: apps/lesson/templates/lesson_index.html:36
