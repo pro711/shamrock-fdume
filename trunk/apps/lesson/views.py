@@ -32,12 +32,12 @@ class LessonAddForm(forms.ModelForm):
     tags = djangoforms.CharField()
     class Meta:
         model = Lesson          
-        exclude = ['lesson_id', 'view_num', 'post_date', 'from_bbs' ]
+        exclude = ['lesson_id', 'view_num', 'post_date' ]
 
 class LessonAddCommentForm(forms.ModelForm):
     class Meta:
         model = LessonComment          
-        exclude = ['comment_id', 'commenter', 'lesson', 'post_date', 'refreshed_time' ]
+        exclude = ['comment_id', 'commenter', 'lesson', 'post_date', 'refreshed_time', 'from_bbs' ]
 
 
 def lesson_index(request):
@@ -216,7 +216,7 @@ def lesson_fetchbbs(request):
             #~ q.order("-timestamp")
             results = q.fetch(1)
             if len(results) == 0:
-                raise Http404, "Nothing to process in datastore."
+                return HttpResponse("Nothing to process in datastore.")
             else:
                 item = results[0]
                 path = item.path
