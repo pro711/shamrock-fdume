@@ -71,7 +71,7 @@ class Lesson(db.Model):
                     if not len(results):
                         # process content, filter out useless markups
                         content=e.content
-                        content = re.sub(r'>1b\[[\d;]+m','',content)
+                        content = re.sub(r'>1b\[[\d;]*m','',content)
                         # put in datastore
                         comment = LessonComment(comment_id=last_id+1,title=e.title,content=content,
                                             lesson=self,from_bbs=True)
