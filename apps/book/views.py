@@ -203,6 +203,11 @@ def book_error(request, error_id):
                 'error_name' : _("Login required"),
                 'detail' : _("You need to login to perform this operation."),
                 }
+    elif error_id == '2':
+        template_values = {
+                'error_name' : _("Permission denied."),
+                'detail' : _("You don't have permission to perform this operation."),
+                }
     return render_to_response(request, "book/book_error.html", template_values)
 
 def book_search(request):
@@ -256,10 +261,15 @@ def book_search(request):
 
     return render_to_response(request, "book/book_search.html", template_values)
 
+@login_required
 def book_mark_as_sold(request,book_id):
     q = BookItem.all()
     q.filter("book_id =", long(book_id))
     results = q.fetch(1)
-    results[0].sold = True
-    results[0].put()
+    e = results[0]
+    if e.owner == request.user or request.user.is_staff:
+        results[0].sold = True
+        results[0].put()
+    else:
+        return HttpResponseRedirect(reverse('apps.book.views.book_error', kwargs={'error_id':'2'}))
     return HttpResponseRedirect("/book/%d/" %results[0].book_id)

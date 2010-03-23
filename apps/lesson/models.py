@@ -34,6 +34,7 @@ class Lesson(db.Model):
         
         #~ raise Exception, self.instructor
         search_tags = [self.instructor, self.name] + self.tags
+        search_tags = list(set(search_tags))    # remove duplicates
         
         for i in range(100):
             results = q.fetch(10, 10*i)
@@ -48,7 +49,12 @@ class Lesson(db.Model):
                         if len_s>1 and s in t:      # single character is futile
                             matched = matched + len_s*len_s     # power weight
                             #~ break
-                if matched > 10:    # FIXME: a simple threshold, needs a better algorithm
+                #~ if matched > 10:    # FIXME: a simple threshold, needs a better algorithm
+                # caculate threshold
+                th1 = sum(map(lambda x:min(9,len(x)**2),search_tags)) / 2
+                th2 = 16     #   > 2^2 + 3^2
+                threshold = min(th1,th2)
+                if matched > threshold:
                     # Put in datastore
                     # Auto-increment comment_id, starting from 1
                     qc = LessonComment.all()

@@ -59,9 +59,16 @@
                             </strong>
                             <br>
                             <span class="pl">
-                                {% trans "Sold" %}:
+                            {% trans "Status" %}:
+                            <span class="rating_num">
+                            {% if e.sold %}
+                                {% trans "Sold out" %}
+                            {% else %}
+                                {% trans "On sale" %}
+                            {% endif %}
                             </span>
-                            {{ e.sold }}
+                            </span>
+                            
                             {% if authenticated %}
                                 <span class="pl">
                                 (&nbsp;<a href="mark_as_sold/">{% trans "Click here to mark it as sold" %}</a>&nbsp;)
@@ -92,12 +99,12 @@
                             <span class="pl">
                                 {% trans "Post date" %}:
                             </span>
-                            {{ e.post_date }}
+                            {{ e.post_date|date:"Y-n-j H:i" }}
                             <br>
                             <span class="pl">
                                 {% trans "Valid before" %}:
                             </span>
-                            {{ e.valid_date }}
+                            {{ e.valid_date|date:"Y-n-j H:i" }}
                             <br>
                         </div>
                     </div>

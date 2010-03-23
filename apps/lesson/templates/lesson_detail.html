@@ -85,18 +85,26 @@
                         <li class="nlst">
                             <h3>
                                     {{ comment.title }}
+                                    {% if comment.from_bbs %}<span class="fright">[From FDUBBS]</span>{% endif %}
                             </h3>
+                        </li>
+                        <li style="clear: both;" class="ilst">
+                            {% if comment.from_bbs %}
+                                <img alt="" src="/static/images/fdubbs.png" class="pil">
+                            {% endif %}
                         </li>
                         <li class="clst">
                             <span class="pl ll obss">
                                 <span class="starb">
+                                {% if not comment.from_bbs %}
                                         {{ comment.commenter }}
+                                {% endif %}
                                 </span>
                             </span>
                             <br>
                             <br>
                             <div id="comment_{{ comment.comment_id }}">
-                                {{ comment.content }}
+                                {{ comment.content|linebreaks}}
                                 <br>
                                 <br>
                             </div>
