@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import force_unicode,smart_str
 from google.appengine.ext import db
 from django.contrib.auth.models import User
+import re
 
 from ragendja.dbutils import cleanup_relations
 from smallseg.smallseg import SEG
@@ -52,7 +53,7 @@ class Lesson(db.Model):
                 #~ if matched > 10:    # FIXME: a simple threshold, needs a better algorithm
                 # caculate threshold
                 th1 = sum(map(lambda x:min(9,len(x)**2),search_tags)) / 2
-                th2 = 16     #   > 2^2 + 3^2
+                th2 = 12     #   2^2 + 3^2
                 threshold = min(th1,th2)
                 if matched > threshold:
                     # Put in datastore
@@ -68,7 +69,11 @@ class Lesson(db.Model):
                     qc = LessonComment.all()
                     results = qc.filter('lesson =', self).filter('title =', e.title)
                     if not len(results):
-                        comment = LessonComment(comment_id=last_id+1,title=e.title,content=e.content,
+                        # process content, filter out useless markups
+                        content=e.content
+                        content = re.sub(r'>1b\[[\d;]+m','',content)
+                        # put in datastore
+                        comment = LessonComment(comment_id=last_id+1,title=e.title,content=content,
                                             lesson=self,from_bbs=True)
                         comment.put()
             

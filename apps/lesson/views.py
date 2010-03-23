@@ -32,17 +32,17 @@ class LessonAddForm(forms.ModelForm):
     tags = djangoforms.CharField()
     class Meta:
         model = Lesson          
-        exclude = ['lesson_id', 'view_num', 'post_date' ]
+        exclude = ['lesson_id', 'view_num', 'post_date', 'refreshed_time', ]
 
 class LessonAddCommentForm(forms.ModelForm):
     class Meta:
         model = LessonComment          
-        exclude = ['comment_id', 'commenter', 'lesson', 'post_date', 'refreshed_time', 'from_bbs' ]
+        exclude = ['comment_id', 'commenter', 'lesson', 'post_date', 'from_bbs' ]
 
 
 def lesson_index(request):
     q = Lesson.all()
-    q.order("-view_num")
+    q.order("-post_date")
     results = q.fetch(8)
     num = len(results)
     items = [results[2*n:2*n+2] for n in range(num/2)]
