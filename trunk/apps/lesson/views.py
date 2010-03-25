@@ -19,7 +19,7 @@ from myapp.models import Contract, File, Person
 from apps.book.models import BookItem
 from apps.lesson.models import Lesson, LessonComment, LessonCommentFetcher
 from xml.dom import minidom
-import datetime
+from datetime import datetime
 import urlparse
 
 from ragendja.dbutils import get_object_or_404
@@ -206,6 +206,11 @@ def lesson_fetchbbs(request):
     from the path defined in BBS_FETCH_ENTRANCE.
     """
     if request.method == 'GET':
+        # don't process anything between 1600 and 0000 UTC since FDUBBS is not accessible
+        now = datetime.utcnow()
+        if now.hour in range(16,24):
+            return HttpResponse("Will not process anything between 1600 and 0000 UTC since FDUBBS is not accessible.")
+        
         path = request.GET.get('path', '')
         if len(path) == 0:
             from_db = True  # whether path is from datastore or specified by user
@@ -237,7 +242,9 @@ def lesson_fetchbbs(request):
         try:
             dom = minidom.parseString(content)
         except:
-            return HttpResponse('Mal-formated xml.')
+            if from_db:
+                item.delete()   # Mal-formated, delete it.
+            return HttpResponse('Mal-formated xml.\n\n%s' % content)
         
         # get parent type
         if len(dom.getElementsByTagName('bbs0an')) > 0:
@@ -259,7 +266,7 @@ def lesson_fetchbbs(request):
                 except KeyError, ex:
                     id = ''
                 # process values
-                post_date = datetime.datetime.strptime(rawtime, '%Y-%m-%dT%H:%M:%S')
+                post_date = datetime.strptime(rawtime, '%Y-%m-%dT%H:%M:%S')
                 # determine the url of directory / file
                 if t==u'f':  # is a file rather than a directory
                     childpath = path.replace('bbs/0an', 'bbs/anc') + relpath
@@ -270,9 +277,11 @@ def lesson_fetchbbs(request):
                 
                 childs.append(childpath)
                 # put entity in datastore
-                childitem = LessonCommentFetcher(type=t, path=childpath, owner=id, post_date=post_date,
-                    title=title, processed=False)
-                childitem.put()
+                q = LessonCommentFetcher.all().filter('post_date = ',post_date).filter('owner =', id).fetch(1)
+                if len(q) == 0:
+                    childitem = LessonCommentFetcher(type=t, path=childpath, owner=id, post_date=post_date,
+                        title=title, processed=False)
+                    childitem.put()
         elif typ == 'f':
             # process a file
             try:
@@ -287,7 +296,8 @@ def lesson_fetchbbs(request):
         if from_db:
             item.processed = True
             item.put()
-        return HttpResponse('<html>Path:%s<br/>Item fetched:<br/> %s <br/>%s</html>' % (path,'<br/>'.join(childs),typ))
+        return HttpResponse('<html>%s<br />Path:%s<br/>Item fetched:<br/> %s <br/>%s</html>' % \
+            (now.strftime('%y/%d/%m %H:%M'),path,'<br/>'.join(childs),typ))
         #~ except:
             #~ raise HttpResponseServerError
             
