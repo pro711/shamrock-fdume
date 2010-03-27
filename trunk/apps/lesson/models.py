@@ -5,7 +5,7 @@ from django.utils.encoding import force_unicode,smart_str
 from google.appengine.ext import db
 from django.contrib.auth.models import User
 import re
-
+import sys
 from ragendja.dbutils import cleanup_relations
 from smallseg.smallseg import SEG
 seg = SEG()     # initialize word segmentation engine
@@ -30,20 +30,22 @@ class Lesson(db.Model):
         
     def add_comment_fdubbs(self):
         '''Find lesson comments in datastore with this lesson and add them.'''
-        q = LessonCommentFetcher.all()
-        q.filter('processed =', True).filter('type =', 'f')
-        
-        #~ raise Exception, self.instructor
         search_tags = [self.instructor, self.name] + self.tags
         search_tags = list(set(search_tags))    # remove duplicates
-        
-        for i in range(100):
-            results = q.fetch(10, 10*i)
+        search_tagslices = seg.cut(' '.join(search_tags).encode('utf-8'))
+        #~ print >>  sys.stderr, ' '.join(search_tagslices)
 
-            for e in results:
+        for stag in search_tagslices:
+            q = LessonCommentFetcher.all()
+            q.filter('processed =', True).filter('type =', 'f')
+            q.filter('title_slices =', stag)
+            
+            for e in q:
                 matched = 0
                 title = e.title
-                title_slices = seg.cut(title.encode('utf-8'))   # split words
+                title_slices = e.title_slices   # split words
+                #~ for i in title_slices:
+                    #~ print >> sys.stderr,i,
                 for t in search_tags:
                     for s in title_slices:
                         len_s = len(s)
@@ -52,10 +54,11 @@ class Lesson(db.Model):
                             #~ break
                 # if matches self.instructor, it's more likely we've found the right lesson
                 if self.instructor in title:
-                    matched = matched * 1.5
+                    matched = matched + 9
                 #~ if matched > 10:    # FIXME: a simple threshold, needs a better algorithm
                 # caculate threshold
-                th1 = sum(map(lambda x:min(9,len(x)**2),search_tags)) / 3
+                th1 = sum(map(lambda x:min(9,len(x)**2),search_tags)) / 2
+                #~ print >>sys.stderr, th1, matched
                 th2 = 12     #   2^2 + 3^2
                 threshold = min(th1,th2)
                 if matched > threshold:
@@ -79,9 +82,6 @@ class Lesson(db.Model):
                         comment = LessonComment(comment_id=last_id+1,title=e.title,content=content,
                                             lesson=self,from_bbs=True)
                         comment.put()
-            
-            if len(results) < 10:       # we have finished processing
-                break
 
 
 class LessonComment(db.Model):
@@ -117,6 +117,7 @@ class LessonCommentFetcher(db.Model):
     post_date = db.DateTimeProperty()
     timestamp = db.DateTimeProperty(auto_now=True)
     processed = db.BooleanProperty(default=False)
+    title_slices = db.ListProperty(str)
 
     def __unicode__(self):
         return '[%s] %s %s' % (self.type, self.timestamp, self.title)
