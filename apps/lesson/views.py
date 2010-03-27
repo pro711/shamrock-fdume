@@ -14,10 +14,9 @@ from google.appengine.ext import db
 from google.appengine.ext.db import djangoforms as forms
 from google.appengine.api import urlfetch
 from mimetypes import guess_type
-from myapp.forms import PersonForm
-from myapp.models import Contract, File, Person
+
 from apps.book.models import BookItem
-from apps.lesson.models import Lesson, LessonComment, LessonCommentFetcher
+from apps.lesson.models import Lesson, LessonComment, LessonCommentFetcher, seg
 from xml.dom import minidom
 from datetime import datetime
 import urlparse
@@ -289,6 +288,10 @@ def lesson_fetchbbs(request):
             except:
                 text = 'ERROR'
             item.content = text
+            # title segmentation
+            title_slices = seg.cut(item.title.encode('utf-8'))
+            item.title_slices = title_slices
+            
             item.put()
             childs.append(text)
             
@@ -311,3 +314,17 @@ def refresh_lessons(request):
     results = q.fetch(5)
     [t.add_comment_fdubbs() for t in results]
     return HttpResponse('Refresh OK')
+
+def refresh_comment_seg(request):
+    '''Refresh segmentation of lessoncommentfetchers.'''
+    response = ''
+    q = LessonCommentFetcher.all()
+    q.filter('processed =', True)
+    q.filter('title_slices =', None)
+    q.order('timestamp')
+    results = q.fetch(100)
+    for i in results:
+        i.title_slices = seg.cut(item.title.encode('utf-8'))
+        response = response + ' '.join(i.title_slices) + '<br/>'
+        i.put()
+    return HttpResponse('Refresh seg OK.<br/>' + response)
