@@ -48,11 +48,14 @@ class Lesson(db.Model):
                     for s in title_slices:
                         len_s = len(s)
                         if len_s>1 and s in t:      # single character is futile
-                            matched = matched + len_s*len_s     # power weight
+                            matched = matched + len_s**2     # power weight
                             #~ break
+                # if matches self.instructor, it's more likely we've found the right lesson
+                if self.instructor in title:
+                    matched = matched * 1.5
                 #~ if matched > 10:    # FIXME: a simple threshold, needs a better algorithm
                 # caculate threshold
-                th1 = sum(map(lambda x:min(9,len(x)**2),search_tags)) / 2
+                th1 = sum(map(lambda x:min(9,len(x)**2),search_tags)) / 3
                 th2 = 12     #   2^2 + 3^2
                 threshold = min(th1,th2)
                 if matched > threshold:
