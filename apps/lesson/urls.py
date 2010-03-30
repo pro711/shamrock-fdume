@@ -9,5 +9,6 @@ urlpatterns = patterns('apps.lesson.views',
     (r'^fetchbbs/$', 'lesson_fetchbbs'),
     (r'^refresh/$', 'refresh_lessons'),
     (r'^refresh_seg/$', 'refresh_comment_seg'),
+    (r'^item_search/$','lesson_search'),
     (r'^all/$', 'lesson_all'),
 )

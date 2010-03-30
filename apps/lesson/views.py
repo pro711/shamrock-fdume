@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect,Http404, HttpResponseForbidden,HttpResponse,HttpResponseNotFound, HttpResponseServerError
 from django.core.paginator import Paginator, InvalidPage
+from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import force_unicode,smart_str
 from django.views.generic.list_detail import object_list, object_detail
 from django.views.generic.create_update import create_object, delete_object, \
@@ -328,3 +329,54 @@ def refresh_comment_seg(request):
         response = response + ' '.join(i.title_slices) + '<br/>'
         i.put()
     return HttpResponse('Refresh seg OK.<br/>' + response)
+    
+def lesson_search(request):
+    search_text_orig=(request.GET["search_text"]).strip()
+    q=Lesson.all()
+    q.order("-refreshed_time")
+
+
+    if len(search_text_orig) != 0:
+        message= _('Results for "%s"') % search_text_orig
+        for search_text in search_text_orig.split(' '):
+            results = filter(lambda x:search_text in x.name+x.instructor+
+                        (' '.join(x.tags) if ' '.join(x.tags) is not None else ''),q)
+        
+        if len(results) == 0:
+            message = _("Sorry, no items matched")
+    else:
+        message = _("If you want to search for a lesson, type in something.")
+        results = []
+    
+    # Paginate using django's pagination tools
+    paginator = Paginator(results, 10)
+    page = request.GET.get('page', 1)
+    page_number = int(page)
+    try:
+        page_obj = paginator.page(page_number)
+    except InvalidPage:
+        raise Http404
+    
+    template_values = {
+        'object_list': page_obj.object_list,
+        'paginator': paginator,
+        'page_obj': page_obj,
+
+        'is_paginated': page_obj.has_other_pages(),
+        'results_per_page': paginator.per_page,
+        'has_next': page_obj.has_next(),
+        'has_previous': page_obj.has_previous(),
+        'page': page_obj.number,
+        'next': page_obj.next_page_number(),
+        'previous': page_obj.previous_page_number(),
+        'first_on_page': page_obj.start_index(),
+        'last_on_page': page_obj.end_index(),
+        'pages': paginator.num_pages,
+        'hits': paginator.count,
+        'page_range': paginator.page_range,
+        
+        'message' : message,
+    }
+
+    return render_to_response(request, "lesson/lesson_search.html", template_values)
+

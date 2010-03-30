@@ -212,7 +212,6 @@ def book_error(request, error_id):
 
 def book_search(request):
     search_text_orig=(request.GET["search_text"]).strip()
-    is_searching = True
     q=BookItem.all()
     q.order("-post_date")
 
