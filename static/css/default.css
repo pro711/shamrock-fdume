@@ -1,5 +1,5 @@
 html {
-background:none repeat scroll 0 0 #FFFFFF;
+background:none repeat scroll 0 0 #E5F4FB;
 color:#111111;
 }
 body, div, dl, dt, dd, ul, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, blockquote {
@@ -73,7 +73,7 @@ display:block;
 height:1%;
 }
 body {
-background:none repeat scroll 0 0 #FEFEFE;
+background:none repeat scroll 0 0 #E5F4FB;
 font:12px Tahoma,Geneva,sans-serif;
 margin:15px 0;
 }
@@ -83,6 +83,7 @@ width:950px;
 }
 #content {
 min-height:420px;
+padding:10px;
 }
 #footer {
 border-top:1px dashed #DDDDDD;
@@ -324,7 +325,7 @@ border:1px solid #686868;
 padding-top:3px;
 }
 #nav a {
-color:#368332;
+color:#FC7C00;
 display:block;
 float:left;
 font-size:14px;
@@ -338,7 +339,7 @@ background-color:transparent;
 text-decoration:underline;
 }
 #nav a.now {
-background:url("/static/images/headnavback.gif") no-repeat scroll right top #EEF9EB;
+background:url("/static/images/headnavback.gif") no-repeat scroll right top #98D0E7;
 color:#000000;
 display:block;
 float:left;
@@ -420,7 +421,7 @@ display:inline;
 vertical-align:top;
 }
 #status {
-background:url("/static/images/headnavbot.gif") no-repeat scroll left bottom #EEF9EB;
+background:url("/static/images/headnavbot.gif") no-repeat scroll left bottom #98D0E7;
 padding:5px 10px 4px;
 text-align:right;
 }
@@ -5766,3 +5767,4 @@ width: 150px;
 width: 100px;
 }
 */
+
