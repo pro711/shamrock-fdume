@@ -321,11 +321,12 @@ def refresh_comment_seg(request):
     response = ''
     q = LessonCommentFetcher.all()
     q.filter('processed =', True)
-    q.filter('title_slices =', None)
+    #~ q.filter('title_slices =', '')
     q.order('timestamp')
     results = q.fetch(100)
     for i in results:
-        i.title_slices = seg.cut(item.title.encode('utf-8'))
+        i.title_slices = seg.cut(i.title.encode('utf-8'))
+        i.timestamp = datetime.utcnow()
         response = response + ' '.join(i.title_slices) + '<br/>'
         i.put()
     return HttpResponse('Refresh seg OK.<br/>' + response)
