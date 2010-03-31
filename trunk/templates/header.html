@@ -9,14 +9,6 @@
             <a  href="/lesson/"><span>{% trans "Lessons" %}</span></a>
             <a  href="/book/"><span>{% trans "Books" %}</span></a>
     </div>
-    
-<!--
-<div id="searbar">
-    <span class="submit"><input class="butt" type="submit" value="搜索"/></span>
-    <span><input class="j a_search_text" name="search_text" title="书籍、电影、音乐" type="text" size="22" maxlength="60" value="" id="page_focus"/></span>
-</div>
-
--->
 <div class="clear"></div>
 
 <div id="status">
@@ -25,7 +17,7 @@
     <span class="pl">
     {% if user.is_authenticated %}
         {% trans "Welcome, " %} {{ user.username }}!
-        <a href="/settings/">{% trans "Settings" %}</a>
+        <a href="{% url django.contrib.auth.views.password_change %}">{% trans "Change password" %}</a>
         <a href="/settings/choose_lang/">{% trans "Choose language" %}</a>
         <a href="{% url django.contrib.auth.views.logout %}">
             {% trans "Logout" %}

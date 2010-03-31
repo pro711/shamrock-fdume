@@ -15,10 +15,10 @@
 {% endblock %}
 
 {% block content %}
-<h1>Login</h1>
+<h1>{% trans "Login" %}</h1>
 <form action="{{ request.get_full_path }}" method="post">
   <table>{{ form }}</table>
-  <input type="submit" value="Login" />
+  <input type="submit" value="{% trans "Login" %}" />
 </form>
 {% endblock content %}
 

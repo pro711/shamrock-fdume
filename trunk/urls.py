@@ -18,4 +18,6 @@ urlpatterns = auth_patterns + patterns('',
     url(r'^account/register/$', 'registration.views.register',
         kwargs={'form_class': UserRegistrationForm},
         name='registration_register'),
+    (r'^about/$', 'django.views.generic.simple.direct_to_template',
+        {'template': 'about.html'}),
 ) + urlpatterns
