@@ -8,12 +8,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-30 14:01+0800\n"
-"PO-Revision-Date: 2010-03-23 23:02+0800\n"
+"POT-Creation-Date: 2010-03-31 19:49+0800\n"
+"PO-Revision-Date: 2010-03-31 19:51+0800\n"
 "Last-Translator: Chen Tao <pro711@gmail.com>\n"
 "Language-Team: zh_CN <pro711@gmail.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: apps/book/views.py:203
@@ -32,12 +32,12 @@ msgstr "无权访问。"
 msgid "You don't have permission to perform this operation."
 msgstr "您没有权限执行此操作。"
 
-#: apps/book/views.py:220 apps/lesson/views.py:340
+#: apps/book/views.py:220 apps/lesson/views.py:341
 #, python-format
 msgid "Results for \"%s\""
 msgstr "\"%s\" 的结果"
 
-#: apps/book/views.py:226 apps/lesson/views.py:346
+#: apps/book/views.py:226 apps/lesson/views.py:347
 msgid "Sorry, no items matched"
 msgstr "抱歉，没有对应的条目"
 
@@ -205,46 +205,53 @@ msgid "Lessons"
 msgstr "课程"
 
 #: apps/book/templates/book_header.html:24
-#: apps/lesson/templates/lesson_header.html:23 templates/header.html:27
+#: apps/lesson/templates/lesson_header.html:23 templates/header.html:19
 msgid "Welcome, "
 msgstr "欢迎，"
 
 #: apps/book/templates/book_header.html:25
-#: apps/lesson/templates/lesson_header.html:24 templates/header.html:28
-msgid "Settings"
-msgstr "设置"
+#: apps/lesson/templates/lesson_header.html:24
+#: common/django_aep_export/django_templates/templates/admin/base.html:40
+#: common/django_aep_export/django_templates/templates/admin/auth/user/change_password.html:14
+#: common/django_aep_export/django_templates/templates/admin/auth/user/change_password.html:47
+#: common/django_aep_export/django_templates/templates/registration/password_change_done.html:3
+#: common/django_aep_export/django_templates/templates/registration/password_change_form.html:3
+#: templates/header.html:20 templates/admin/base_site.html:9
+msgid "Change password"
+msgstr "更改密码"
 
 #: apps/book/templates/book_header.html:26
 #: apps/lesson/templates/lesson_header.html:25
 #: apps/settings/templates/choose_lang.html:4
-#: apps/settings/templates/choose_lang.html:18 templates/header.html:29
+#: apps/settings/templates/choose_lang.html:18 templates/header.html:21
 msgid "Choose language"
 msgstr "选择语言"
 
 #: apps/book/templates/book_header.html:28
-#: apps/lesson/templates/lesson_header.html:27 templates/header.html:31
+#: apps/lesson/templates/lesson_header.html:27 templates/header.html:23
 msgid "Logout"
 msgstr "退出"
 
 #: apps/book/templates/book_header.html:31
-#: apps/lesson/templates/lesson_header.html:30 templates/header.html:34
+#: apps/lesson/templates/lesson_header.html:30 templates/header.html:26
 msgid "Welcome, please"
 msgstr "欢迎，请"
 
 #: apps/book/templates/book_header.html:33
 #: apps/lesson/templates/lesson_header.html:32
-#: registration/templates/login.html:4 templates/header.html:36
+#: registration/templates/login.html:4 registration/templates/login.html:18
+#: registration/templates/login.html:21 templates/header.html:28
 msgid "Login"
 msgstr "登录"
 
 #: apps/book/templates/book_header.html:35
-#: apps/lesson/templates/lesson_header.html:34 templates/header.html:38
+#: apps/lesson/templates/lesson_header.html:34 templates/header.html:30
 msgid "or"
 msgstr "或"
 
 #: apps/book/templates/book_header.html:37
 #: apps/lesson/templates/lesson_header.html:36
-#: registration/templates/registration_form.html:4 templates/header.html:40
+#: registration/templates/registration_form.html:4 templates/header.html:32
 msgid "Register"
 msgstr "注册"
 
@@ -265,8 +272,7 @@ msgstr "查看所有书籍"
 msgid "Anonymous"
 msgstr "匿名人士"
 
-#: apps/lesson/views.py:348
-#, fuzzy
+#: apps/lesson/views.py:349
 msgid "If you want to search for a lesson, type in something."
 msgstr "如果您想要搜索一门课程，请输入一些信息。"
 
@@ -360,13 +366,15 @@ msgid "last name"
 msgstr "姓"
 
 #: common/appenginepatch/ragendja/auth/views.py:38
+#: registration/templates/logged_out.html:4
+#: registration/templates/logged_out.html:18
 msgid "Logged out"
 msgstr "退出"
 
 #: common/django_aep_export/django_templates/templates/admin/404.html:4
 #: common/django_aep_export/django_templates/templates/admin/404.html:8
 msgid "Page not found"
-msgstr ""
+msgstr "页面无法找到"
 
 #: common/django_aep_export/django_templates/templates/admin/404.html:10
 msgid "We're sorry, but the requested page could not be found."
@@ -436,15 +444,6 @@ msgstr ""
 #: templates/admin/base_site.html:8
 msgid "Documentation"
 msgstr ""
-
-#: common/django_aep_export/django_templates/templates/admin/base.html:40
-#: common/django_aep_export/django_templates/templates/admin/auth/user/change_password.html:14
-#: common/django_aep_export/django_templates/templates/admin/auth/user/change_password.html:47
-#: common/django_aep_export/django_templates/templates/registration/password_change_done.html:3
-#: common/django_aep_export/django_templates/templates/registration/password_change_form.html:3
-#: templates/admin/base_site.html:9
-msgid "Change password"
-msgstr "更改密码"
 
 #: common/django_aep_export/django_templates/templates/admin/base.html:47
 #: common/django_aep_export/django_templates/templates/registration/password_change_done.html:3
@@ -1073,6 +1072,22 @@ msgstr ""
 #: registration/models.py:231
 msgid "registration profiles"
 msgstr ""
+
+#: registration/templates/logged_out.html:19
+msgid "You've successfully logged out."
+msgstr "您已经成功退出。"
+
+#: registration/templates/password_reset_form.html:4
+#: registration/templates/password_reset_form.html:18
+msgid "Reset password"
+msgstr "重置密码"
+
+#: templates/about.html:4 templates/about.html.py:18
+msgid "About Learn@Fudan"
+msgstr "关于 Learn@Fudan"
+
+#~ msgid "Settings"
+#~ msgstr "设置"
 
 #~ msgid "Title"
 #~ msgstr "书名"

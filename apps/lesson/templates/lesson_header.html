@@ -21,7 +21,7 @@
     <span class="pl">
     {% if user.is_authenticated %}
         {% trans "Welcome, " %} {{ user.username }}!
-        <a href="/settings/">{% trans "Settings" %}</a>
+        <a href="{% url django.contrib.auth.views.password_change %}">{% trans "Change password" %}</a>
         <a href="/settings/choose_lang/">{% trans "Choose language" %}</a>
         <a href="{% url django.contrib.auth.views.logout %}">
             {% trans "Logout" %}
