@@ -1,4 +1,4 @@
-﻿application: shamrock-fdume
+application: shamrock-fdume
 version: 2
 runtime: python
 api_version: 1
@@ -22,6 +22,14 @@ handlers:
   static_dir: _generated_media
   secure: optional
 
+- url: /lesson/fetchbbs
+  script: common/appenginepatch/main.py
+  login: admin
+
+- url: /lesson/refresh
+  script: common/appenginepatch/main.py
+  login: admin
+
 - url: /.*
   script: common/appenginepatch/main.py
   secure: optional
@@ -29,3 +37,6 @@ handlers:
 - url: /remote_api
   script: $PYTHON_LIB/google/appengine/ext/remote_api/handler.py
   login: admin
+
+
+
