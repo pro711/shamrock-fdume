@@ -40,6 +40,22 @@
                             {{e.instructor}}
                         </span>
                         <br>
+                        <span>
+                            <span class="pl">
+                                {% trans "Tags" %}
+                            </span>
+                            :
+                            {{ e.tags|join:', ' }}
+                        </span>
+                        <br>
+                        <span>
+                            <span class="pl">
+                                {% trans "Post date" %}
+                            </span>
+                            :
+                            {{ e.post_date|date:"Y-n-j H:i" }}
+                        </span>
+                        <br>
                         <div class="obmo">
                             <span class="pl">
                                 {{ e.view_num }} &nbsp; {% trans "Views" %}
